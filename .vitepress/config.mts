@@ -1,5 +1,9 @@
+import path from 'node:path';
 import { fileURLToPath } from 'url';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { defineConfig } from 'vitepress';
+
+const STATIC_FILE_EXTENSIONS = ['sh', 'zip', 'py'];
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -11,6 +15,24 @@ export default defineConfig({
     ignoreDeadLinks: true,
     appearance: false,
     vite: {
+        plugins: [
+            viteStaticCopy({
+                targets: [
+                    {
+                        src: `../content/**/*.{${STATIC_FILE_EXTENSIONS.join(',')}}`,
+                        dest: '',
+                        rename: (_file, _extension, absolutePath) => {
+                            const contentPath = path.resolve('./content');
+                            const resolvedName = absolutePath.substring(
+                                contentPath.length + 1,
+                            );
+
+                            return resolvedName;
+                        },
+                    },
+                ],
+            }),
+        ],
         ssr: {
             noExternal: ['monaco-editor'],
         },
@@ -24,6 +46,15 @@ export default defineConfig({
         editLink: {
             pattern: 'https://github.com/inf-lab-dev/labs/blob/main/:path',
             text: 'Verbessere diese Seite',
+        },
+    },
+    markdown: {
+        container: {
+            tipLabel: 'Tipp',
+            warningLabel: 'Warnung',
+            dangerLabel: 'Achtung',
+            infoLabel: 'Information',
+            detailsLabel: 'Details',
         },
     },
 });

@@ -78,7 +78,7 @@ const [key, source] = computed<[string, EncryptedSolution] | [null, null]>(
 
             const sourcePath =
                 `${url.pathname}${source}.solution.json`.substring(1);
-            console.log(sourcePath, encryptedSolutions);
+
             if (key != null && sourcePath in encryptedSolutions) {
                 return [key, encryptedSolutions[sourcePath]];
             }

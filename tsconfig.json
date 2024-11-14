@@ -3,11 +3,19 @@
         "moduleResolution": "bundler",
         "target": "ESNext",
         "module": "ESNext",
-        "lib": ["DOM", "ES2020"],
+        "lib": [
+            "DOM",
+            "ES2020"
+        ],
         "strict": true,
         "resolveJsonModule": true,
         "esModuleInterop": true
     },
-    "include": [".vitepress/**/*.{vue,ts}", "src/**/*"],
-    "exclude": ["node_modules/"]
+    "include": [
+        ".vitepress/**/*.{vue,ts}",
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules/**/*"
+    ]
 }

@@ -4,7 +4,7 @@ The [VitePress](https://vitepress.dev/) setup for inf-lab.dev
 
 ## Updating
 
-To update the `content` submodule, use `npm run update-content`.
+To update all submodules, use `npm run update:submodule`.
 
 ## Developing
 
