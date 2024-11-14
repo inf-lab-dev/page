@@ -11,6 +11,7 @@ export default defineConfig({
     description: 'Material für die Inf-Einf-Labs',
     lang: 'de-DE',
     srcDir: './content',
+    base: '/page/',
     cleanUrls: true,
     ignoreDeadLinks: true,
     appearance: false,
