@@ -1,0 +1,41 @@
+@import '~/normalize.css/normalize.css';
+@import 'primer/primer.scss';
+
+/* Code blocks */
+html .vp-code span {
+    color: var(--shiki-light, inherit);
+}
+
+div[class*='language-'] {
+    .copy,
+    .lang {
+        display: none;
+    }
+}
+
+/* Heading Links */
+.header-anchor {
+    text-decoration: none !important;
+
+    &:hover::before {
+        visibility: visible;
+    }
+
+    &::before {
+        content: '🔗';
+        font-size: 70%;
+        visibility: hidden;
+    }
+}
+
+/* Print view */
+@media print {
+    .no-print,
+    .header-anchor {
+        display: none;
+    }
+
+    pre.highlight > code {
+        white-space: pre-line;
+    }
+}

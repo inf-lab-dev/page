@@ -1,0 +1,51 @@
+// Optional offset options to work with grid.scss
+
+// Offset Columns
+
+@each $breakpoint, $variant in $responsive-variants {
+    @include breakpoint($breakpoint) {
+        .offset#{$variant}-1 {
+            margin-left: (calc(1 / 12) * 100%) !important;
+        }
+
+        .offset#{$variant}-2 {
+            margin-left: (calc(2 / 12) * 100%) !important;
+        }
+
+        .offset#{$variant}-3 {
+            margin-left: (calc(3 / 12) * 100%) !important;
+        }
+
+        .offset#{$variant}-4 {
+            margin-left: (calc(4 / 12) * 100%) !important;
+        }
+
+        .offset#{$variant}-5 {
+            margin-left: (calc(5 / 12) * 100%) !important;
+        }
+
+        .offset#{$variant}-6 {
+            margin-left: (calc(6 / 12) * 100%) !important;
+        }
+
+        .offset#{$variant}-7 {
+            margin-left: (calc(7 / 12) * 100%) !important;
+        }
+
+        .offset#{$variant}-8 {
+            margin-left: (calc(8 / 12) * 100%) !important;
+        }
+
+        .offset#{$variant}-9 {
+            margin-left: (calc(9 / 12) * 100%) !important;
+        }
+
+        .offset#{$variant}-10 {
+            margin-left: (calc(10 / 12) * 100%) !important;
+        }
+
+        .offset#{$variant}-11 {
+            margin-left: (calc(11 / 12) * 100%) !important;
+        }
+    }
+}
