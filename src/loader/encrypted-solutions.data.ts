@@ -1,15 +1,10 @@
 import fs from 'node:fs/promises';
+import { EncryptedSolution } from 'solution-zone';
 import { defineLoader } from 'vitepress';
 
 const CONTENT_FOLDER = 'content/';
 
 type Data = Record<string, EncryptedSolution>;
-
-export interface EncryptedSolution {
-    language: string;
-    code: string;
-    annotations: string;
-}
 
 export declare const data: Data;
 

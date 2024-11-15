@@ -24,7 +24,7 @@
         "vue-tsc": "^2.1.10"
     },
     "dependencies": {
-        "monaco-editor": "^0.52.0",
-        "normalize.css": "^8.0.1"
+        "normalize.css": "^8.0.1",
+        "solution-zone": "git+https://github.com/inf-lab-dev/solution-zone.git#v1.0.0"
     }
 }
