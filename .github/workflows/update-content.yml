@@ -1,0 +1,46 @@
+# Updates the content submodule using a pull request
+name: Update content
+
+on:
+    repository_dispatch:
+        types: [update_content]
+
+permissions:
+    contents: write
+    pull-requests: write
+
+jobs:
+    update:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  submodules: 'recursive'
+
+            - name: Update git user
+              run: |
+                  git config --global user.name "github-actions[bot]"
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+            - name: Update Content
+              run: |
+                  git submodule update --remote --merge
+                  git add .
+
+                  content_sha=$(git submodule status | awk '{ print substr($1,2) }')
+                  echo "content_sha=${content_sha}" >> $GITHUB_ENV
+
+                  git commit -m "Update content to latest commit from `labs/main@${{ env.content_sha }}`"
+
+            - name: Create Pull Request
+              uses: peter-evans/create-pull-request@v7
+              with:
+                  delete-branch: true
+                  author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+                  branch: 'update-content/${{ env.content_sha }}'
+                  title: 'Update content to ${{ env.content_sha }}'
+                  base: main
+                  body: |
+                      The content has been updated to the latest commit inf-lab-dev/labs@${{ env.content_sha }} from the [labs](https://github.com/inf-lab-dev/labs) repository.
