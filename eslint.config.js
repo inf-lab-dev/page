@@ -14,4 +14,7 @@ export default [
         files: ['**/*.vue'],
         languageOptions: { parserOptions: { parser: tseslint.parser } },
     },
+    {
+        'vue/multi-word-component-names': false,
+    },
 ];

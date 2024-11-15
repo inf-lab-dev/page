@@ -44,7 +44,7 @@ export default defineConfig({
     },
     themeConfig: {
         editLink: {
-            pattern: 'https://github.com/inf-lab-dev/labs/blob/main/:path',
+            pattern: 'https://github.com/inf-lab-dev/labs/edit/main/:path',
             text: 'Verbessere diese Seite',
         },
     },

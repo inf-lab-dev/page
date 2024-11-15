@@ -18,15 +18,17 @@
 </template>
 
 <script lang="ts" setup>
-import { useData, useRoute } from 'vitepress';
+import { useData } from 'vitepress';
 import { computed } from 'vue';
 
-const { site, theme, frontmatter } = useData();
-const { path } = useRoute();
+const { site, page, theme, frontmatter } = useData();
 
 const editUrl = computed(() => {
     if (theme.value.editLink) {
-        return theme.value.editLink.pattern.replace(':path', path);
+        return theme.value.editLink.pattern.replace(
+            ':path',
+            page.value.relativePath,
+        );
     }
 
     return '';
