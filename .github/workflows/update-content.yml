@@ -2,8 +2,6 @@
 name: Update content
 
 on:
-    workflow_dispatch:
-
     repository_dispatch:
         types: [update_content]
 
@@ -43,7 +41,8 @@ jobs:
                   delete-branch: true
                   author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
                   branch: 'update-content/${{ env.content_sha }}'
-                  title: 'Update content to ${{ env.content_sha }}'
+                  title: 'Update content submodule'
+                  labels: update content
                   base: main
                   body: |
                       The content has been updated to the latest commit inf-lab-dev/labs@${{ env.content_sha }} from the [labs](https://github.com/inf-lab-dev/labs) repository.
