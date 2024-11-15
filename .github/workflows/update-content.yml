@@ -2,6 +2,8 @@
 name: Update content
 
 on:
+    workflow_dispatch:
+
     repository_dispatch:
         types: [update_content]
 
@@ -17,6 +19,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
               with:
+                  fetch-depth: 0
                   submodules: 'recursive'
 
             - name: Update git user
