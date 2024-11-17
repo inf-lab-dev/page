@@ -30,10 +30,10 @@ const monaco = shallowRef<MonacoModule>();
 const editor = shallowRef<Editor>();
 
 function createEditor() {
-    editor.value = monaco.value!.editor.create(
-        editorElement.value!,
-        props.options,
-    );
+    editor.value = monaco.value!.editor.create(editorElement.value!, {
+        ...props.options,
+        value: modelValue.value,
+    });
 
     editor.value.onDidChangeModelContent(
         () => (modelValue.value = editor.value!.getValue()),
