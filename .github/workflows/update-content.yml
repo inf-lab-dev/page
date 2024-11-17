@@ -27,6 +27,9 @@ jobs:
 
             - name: Update Content
               run: |
+                  previous_content_sha=$(git submodule status | awk '{ print substr($1,2) }')
+                  echo "previous_content_sha=${previous_content_sha}" >> $GITHUB_ENV
+
                   git submodule update --remote --merge
                   git add .
 
@@ -34,6 +37,10 @@ jobs:
                   echo "content_sha=${content_sha}" >> $GITHUB_ENV
 
                   git commit -m "Update content to latest commit from `labs/main@${{ env.content_sha }}`"
+
+            - name: Close previous Pull Request
+              run: |
+                  gh pr close update-content/${{ env.previous_content_sha }} --comment "There is a newer pull-request available." --delete-branch
 
             - name: Create Pull Request
               uses: peter-evans/create-pull-request@v7
