@@ -2,8 +2,6 @@
 name: Update content
 
 on:
-    workflow_dispatch:
-
     repository_dispatch:
         types: [update_content]
 
@@ -38,7 +36,7 @@ jobs:
                   content_sha=$(git submodule status | awk '{ print substr($1,2) }')
                   echo "content_sha=${content_sha}" >> $GITHUB_ENV
 
-                  git commit -m "Update content to latest commit from `labs/main@${{ env.content_sha }}`"
+                  git commit -m "Update content to latest commit `labs/main`"
 
             - name: Close previous Pull Request
               continue-on-error: true
