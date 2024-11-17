@@ -39,6 +39,7 @@ jobs:
                   git commit -m "Update content to latest commit from `labs/main@${{ env.content_sha }}`"
 
             - name: Close previous Pull Request
+              continue-on-error: true
               run: |
                   gh pr close update-content/${{ env.previous_content_sha }} --comment "There is a newer pull-request available." --delete-branch
 
