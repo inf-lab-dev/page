@@ -1,6 +1,13 @@
 <template>
-    <div ref="editorElement" class="wrapper">
-        <div class="wrapper__locked">
+    <div
+        :class="[
+            'wrapper',
+            {
+                'wrapper--rendered': !!decryptedSolution,
+            },
+        ]"
+    >
+        <div v-if="!decryptedSolution" class="wrapper__locked">
             <span class="wrapper__lock">🔒</span>
             <p>
                 <strong class="wrapper__header">
@@ -12,107 +19,106 @@
                 </span>
             </p>
         </div>
+        <CodeEditor
+            v-else
+            v-model="decryptedSolution.code"
+            class="wrapper__editor"
+            :options="editorOptions"
+        />
     </div>
 </template>
 
 <script setup lang="ts">
-import {
-    createEditor,
-    createViteWorkerOptions,
-    DecryptedSolution,
-    decryptFile,
-    EncryptedSolution,
-} from 'solution-zone';
+import { DecryptedSolution, decryptFile } from 'solution-zone';
 import { useData } from 'vitepress';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, shallowRef, watch } from 'vue';
 import { data as encryptedSolutions } from '../loader/encrypted-solutions.data';
-
-const editorElement = ref<HTMLDivElement>();
+import CodeEditor, {
+    EditorOptions,
+    EnhancedEditor,
+} from './util/CodeEditor.vue';
 
 const { isDark } = useData();
 
-const [key, source] = computed<[string, EncryptedSolution] | [null, null]>(
-    () => {
-        if (!import.meta.env.SSR) {
-            const url = new URL(location.href);
+const editor = shallowRef<EnhancedEditor>();
+const decryptedSolution = shallowRef<DecryptedSolution>();
 
-            const key = url.searchParams.get('key');
-            const source = url.searchParams.get('source') ?? 'values';
+const solution = computed(() => {
+    if (!import.meta.env.SSR) {
+        const url = new URL(location.href);
 
-            const sourcePath =
-                `${url.pathname}${source}.solution.json`.substring(1);
+        const key = url.searchParams.get('key');
+        const source = url.searchParams.get('source') ?? 'values';
 
-            if (key != null && sourcePath in encryptedSolutions) {
-                return [key, encryptedSolutions[sourcePath]];
-            }
-        }
-
-        return [null, null];
-    },
-).value;
-
-async function setupEditor({ language, code, annotations }: DecryptedSolution) {
-    if (!editorElement.value) {
-        throw new ReferenceError(
-            'Could not find element to display solution within.',
+        const sourcePath = `${url.pathname}${source}.solution.json`.substring(
+            1,
         );
+
+        if (key != null && sourcePath in encryptedSolutions) {
+            return { key, source: encryptedSolutions[sourcePath] };
+        }
     }
 
-    editorElement.value.classList.add('wrapper--rendered');
-    editorElement.value.innerHTML = '';
+    return { key: null, source: null };
+});
 
-    const [monaco, editor] = await createEditor({
-        worker: await createViteWorkerOptions(
-            import('monaco-editor/esm/vs/editor/editor.worker?worker'),
-            import('monaco-editor/esm/vs/language/css/css.worker?worker'),
-            import('monaco-editor/esm/vs/language/html/html.worker?worker'),
-            import('monaco-editor/esm/vs/language/json/json.worker?worker'),
-            import('monaco-editor/esm/vs/language/typescript/ts.worker?worker'),
-        ),
-        element: editorElement.value,
-        options: {
-            language,
-            value: code,
-            lineNumbers: 'on',
-            automaticLayout: true,
-            scrollBeyondLastLine: false,
-            renderValidationDecorations: 'on',
-            theme: isDark.value ? 'vs-dark' : 'vs-light',
-            readOnlyMessage: { value: 'Cannot edit this file.' },
-            readOnly: true,
-        },
-    });
+const editorOptions = computed<EditorOptions>(() => ({
+    language: decryptedSolution.value?.language || 'plaintext',
+    lineNumbers: 'on',
+    automaticLayout: true,
+    scrollBeyondLastLine: false,
+    renderValidationDecorations: 'on',
+    theme: isDark.value ? 'vs-dark' : 'vs-light',
+    readOnlyMessage: { value: 'Cannot edit this file.' },
+    readOnly: true,
+}));
 
-    const markers = annotations.map(
-        ({
-            line: [startLineNumber, endLineNumber],
-            column: [startColumn, endColumn],
-            comment: message,
-        }) => ({
-            startLineNumber,
-            endLineNumber,
-            startColumn,
-            endColumn,
-            message,
-            severity: monaco.MarkerSeverity.Hint,
-        }),
-    );
-
-    monaco.editor.setModelMarkers(editor.getModel()!, 'annotations', markers);
-}
-
-async function loadSolution(key: string): Promise<DecryptedSolution> {
-    if (source == null) {
+async function loadSolution() {
+    if (solution.value.source == null) {
         throw new ReferenceError('Cannot load solution from "NULL" source.');
     }
 
-    return await decryptFile(key, source);
+    decryptedSolution.value = await decryptFile(
+        solution.value.key,
+        solution.value.source,
+    );
 }
 
+watch(
+    decryptedSolution,
+    () => {
+        if (!editor.value) {
+            return;
+        }
+
+        const markers = decryptedSolution.value?.annotations.map(
+            ({
+                line: [startLineNumber, endLineNumber],
+                column: [startColumn, endColumn],
+                comment: message,
+            }) => ({
+                startLineNumber,
+                endLineNumber,
+                startColumn,
+                endColumn,
+                message,
+                severity: editor.value!.monaco.MarkerSeverity.Hint,
+            }),
+        );
+
+        editor.value!.monaco.editor.setModelMarkers(
+            editor.value!.getModel()!,
+            'annotations',
+            markers ?? [],
+        );
+    },
+    { deep: true },
+);
+
 onMounted(() => {
-    if (key) {
+    if (solution.value.key) {
         // drop errors silently
-        loadSolution(key).then(setupEditor);
+        loadSolution();
     }
 });
 </script>
@@ -121,6 +127,9 @@ onMounted(() => {
 .wrapper {
     height: 100%;
     width: 100%;
+
+    display: flex;
+    flex-direction: column;
 
     .wrapper__locked {
         display: flex;
@@ -134,6 +143,10 @@ onMounted(() => {
     .wrapper__header {
         display: block;
         font-weight: bold;
+    }
+
+    .wrapper__editor {
+        flex-grow: 1;
     }
 }
 
