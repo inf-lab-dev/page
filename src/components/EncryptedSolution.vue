@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { DecryptedSolution, decryptFile } from 'solution-zone';
 import { useData } from 'vitepress';
-import { computed, shallowRef, watch } from 'vue';
+import { computed, onMounted, shallowRef, watch } from 'vue';
 import { data as encryptedSolutions } from '../loader/encrypted-solutions.data';
 import CodeEditor, {
     EditorOptions,
@@ -74,6 +74,33 @@ const editorOptions = computed<EditorOptions>(() => ({
     readOnly: true,
 }));
 
+function updateAnnotations() {
+    if (!editor.value) {
+        return;
+    }
+
+    const markers = decryptedSolution.value?.annotations.map(
+        ({
+            line: [startLineNumber, endLineNumber],
+            column: [startColumn, endColumn],
+            comment: message,
+        }) => ({
+            startLineNumber,
+            endLineNumber,
+            startColumn,
+            endColumn,
+            message,
+            severity: editor.value!.monaco.MarkerSeverity.Hint,
+        }),
+    );
+
+    editor.value!.monaco.editor.setModelMarkers(
+        editor.value!.getModel()!,
+        'annotations',
+        markers ?? [],
+    );
+}
+
 async function loadSolution() {
     if (solution.value.source == null) {
         throw new ReferenceError('Cannot load solution from "NULL" source.');
@@ -88,42 +115,17 @@ async function loadSolution() {
 function onEditorLoaded(editorInstance: EnhancedEditor) {
     editor.value = editorInstance;
 
+    updateAnnotations();
+}
+
+watch(decryptedSolution, () => updateAnnotations(), { deep: true });
+
+onMounted(() => {
     if (solution.value.key) {
         // drop errors silently
         loadSolution();
     }
-}
-
-watch(
-    decryptedSolution,
-    () => {
-        if (!editor.value) {
-            return;
-        }
-
-        const markers = decryptedSolution.value?.annotations.map(
-            ({
-                line: [startLineNumber, endLineNumber],
-                column: [startColumn, endColumn],
-                comment: message,
-            }) => ({
-                startLineNumber,
-                endLineNumber,
-                startColumn,
-                endColumn,
-                message,
-                severity: editor.value!.monaco.MarkerSeverity.Hint,
-            }),
-        );
-
-        editor.value!.monaco.editor.setModelMarkers(
-            editor.value!.getModel()!,
-            'annotations',
-            markers ?? [],
-        );
-    },
-    { deep: true },
-);
+});
 </script>
 
 <style lang="css" scoped>
