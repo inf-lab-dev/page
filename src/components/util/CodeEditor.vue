@@ -7,8 +7,10 @@ import { onMounted, shallowRef, useTemplateRef, watch } from 'vue';
 
 export type MonacoModule = typeof import('monaco-editor');
 export type Editor = import('monaco-editor').editor.IStandaloneCodeEditor;
-export type EditorOptions =
-    import('monaco-editor').editor.IStandaloneEditorConstructionOptions;
+export type EditorOptions = Omit<
+    import('monaco-editor').editor.IStandaloneEditorConstructionOptions,
+    'value'
+>;
 
 export type EnhancedEditor = Editor & {
     monaco: MonacoModule;

@@ -24,6 +24,7 @@
             v-model="decryptedSolution.code"
             class="wrapper__editor"
             :options="editorOptions"
+            @loaded="onEditorLoaded"
         />
     </div>
 </template>
@@ -31,7 +32,7 @@
 <script setup lang="ts">
 import { DecryptedSolution, decryptFile } from 'solution-zone';
 import { useData } from 'vitepress';
-import { computed, onMounted, shallowRef, watch } from 'vue';
+import { computed, shallowRef, watch } from 'vue';
 import { data as encryptedSolutions } from '../loader/encrypted-solutions.data';
 import CodeEditor, {
     EditorOptions,
@@ -84,6 +85,15 @@ async function loadSolution() {
     );
 }
 
+function onEditorLoaded(editorInstance: EnhancedEditor) {
+    editor.value = editorInstance;
+
+    if (solution.value.key) {
+        // drop errors silently
+        loadSolution();
+    }
+}
+
 watch(
     decryptedSolution,
     () => {
@@ -114,13 +124,6 @@ watch(
     },
     { deep: true },
 );
-
-onMounted(() => {
-    if (solution.value.key) {
-        // drop errors silently
-        loadSolution();
-    }
-});
 </script>
 
 <style lang="css" scoped>
