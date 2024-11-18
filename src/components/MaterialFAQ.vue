@@ -10,9 +10,10 @@
 
     <details v-if="hasCommand">
         <summary class="summary">Was macht der Befehl überhaupt?</summary>
-        Dieser Befehl lädt Code herunter und führt diesen direkt aus, sodass für
-        euch komfortabel ein weiteres ZIP-Archiv heruntergeladen und gleich
-        entpackt wird. All das wird anschließend wieder aufgeräumt.
+        Dieser Befehl lädt Code herunter und führt diesen direkt aus. In diesem
+        Fall wird ein ZIP-Archiv heruntergeladen und gleich entpackt. Das
+        ZIP-Archiv wird im Nachhinein wieder gelöscht, sodass nur noch der
+        entdeckte Inhalt übrig bleibt.
     </details>
 </template>
 
