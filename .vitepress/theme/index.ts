@@ -8,9 +8,7 @@ export default {
     Layout,
     enhanceApp({ app }) {
         // make the commonly used components available everywhere
-        app.component('EncryptedSolution', EncryptedSolution).component(
-            'MaterialFAQ',
-            MaterialFAQ,
-        );
+        app.component('EncryptedSolution', EncryptedSolution);
+        app.component('MaterialFAQ', MaterialFAQ);
     },
 } satisfies Theme;
