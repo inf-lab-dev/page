@@ -1,12 +1,13 @@
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
-import { defineConfig } from 'vitepress';
+import { defineConfigWithTheme } from 'vitepress';
+import { ThemeOptions } from './theme';
 
 const STATIC_FILE_EXTENSIONS = ['sh', 'zip', 'py'];
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default defineConfigWithTheme<ThemeOptions>({
     title: 'inf-labs',
     description: 'Material für die Inf-Einf-Labs',
     lang: 'de-DE',
@@ -46,6 +47,9 @@ export default defineConfig({
         editLink: {
             pattern: 'https://github.com/inf-lab-dev/labs/edit/main/:path',
             text: 'Verbessere diese Seite',
+        },
+        banner: {
+            advent: true,
         },
     },
     markdown: {

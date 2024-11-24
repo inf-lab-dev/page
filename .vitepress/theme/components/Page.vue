@@ -4,6 +4,8 @@
             <a href="/">{{ site.title }}</a>
         </h1>
 
+        <AdventOfInfAd />
+
         <Content />
 
         <div
@@ -20,6 +22,7 @@
 <script lang="ts" setup>
 import { useData } from 'vitepress';
 import { computed } from 'vue';
+import AdventOfInfAd from './banner/AdventOfInfAd.vue';
 
 const { site, page, theme, frontmatter } = useData();
 
