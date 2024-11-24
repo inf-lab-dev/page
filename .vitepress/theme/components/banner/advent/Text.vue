@@ -6,7 +6,7 @@
 
         <a
             class="text__join"
-            href="https://advent.inf-labs.dev"
+            href="https://advent.inf-lab.dev"
             target="_blank"
             rel="noreferer noopener"
             >Dann mach gerne mit!</a
