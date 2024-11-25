@@ -4,6 +4,16 @@ import MaterialFAQ from '../../src/components/MaterialFAQ.vue';
 import Layout from './Layout.vue';
 import './style/style.scss';
 
+export interface ThemeOptions {
+    editLink: {
+        pattern: string;
+        text: string;
+    };
+    banner: {
+        advent: boolean;
+    };
+}
+
 export default {
     Layout,
     enhanceApp({ app }) {
