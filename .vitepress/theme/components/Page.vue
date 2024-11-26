@@ -43,26 +43,24 @@ $py: 16px;
 $mx: 32px;
 
 .wrapper {
-    max-width: 1012px;
+    margin-top: $mx !important;
+
+    margin-right: auto !important;
+    margin-bottom: $mx !important;
+    margin-left: auto !important;
 
     padding-right: $py;
     padding-left: $py;
-
-    margin-top: $mx !important;
-    margin-bottom: $mx !important;
-
-    margin-right: auto !important;
-    margin-left: auto !important;
+    max-width: 1012px;
 }
 
 .wrapper__footer {
-    border-top: 1px var(--page-footer-border) solid;
-    color: var(--page-footer-text);
-
-    text-align: right;
+    margin-top: $mx;
+    border-top: 1px var(--borderColor-neutral-muted) solid;
 
     padding-top: $py;
+    color: var(--fgColor-muted);
 
-    margin-top: $mx;
+    text-align: right;
 }
 </style>
