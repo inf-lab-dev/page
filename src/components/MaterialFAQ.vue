@@ -1,6 +1,6 @@
 <template>
     <details>
-        <summary class="summary">
+        <summary>
             Ich kann die Aufgabe schon alleine lösen, bin ich jetzt vergebens
             hier?
         </summary>
@@ -9,7 +9,7 @@
     </details>
 
     <details v-if="hasCommand">
-        <summary class="summary">Was macht der Befehl überhaupt?</summary>
+        <summary>Was macht der Befehl überhaupt?</summary>
         Dieser Befehl lädt Code herunter und führt diesen direkt aus. In diesem
         Fall wird ein ZIP-Archiv heruntergeladen und gleich entpackt. Das
         ZIP-Archiv wird im Nachhinein wieder gelöscht, sodass nur noch der
@@ -27,9 +27,3 @@ withDefaults(
     },
 );
 </script>
-
-<style lang="css" scoped>
-.summary {
-    font-weight: bold;
-}
-</style>
