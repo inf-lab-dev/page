@@ -16,7 +16,7 @@
 
 <style lang="scss" scoped>
 .text {
-    margin-left: 1rem;
+    margin-top: 1rem;
 
     &__join {
         display: block;
