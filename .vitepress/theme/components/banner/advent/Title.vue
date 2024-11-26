@@ -21,7 +21,7 @@
 
     &__subtitle {
         margin: 0;
-        font-style: italic;
+        font-weight: bold;
     }
 
     &__keyword {
