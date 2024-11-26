@@ -16,14 +16,14 @@
 
 <style lang="scss" scoped>
 .text {
-    margin-left: 1rem;
+    margin-top: 1rem;
 
     &__join {
         display: block;
 
         max-width: fit-content;
 
-        margin-top: 0.5rem;
+        margin-top: 1rem;
         padding: 0.4em 0.9em;
 
         font-size: 1rem;
