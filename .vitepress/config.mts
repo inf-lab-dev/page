@@ -11,7 +11,7 @@ export default defineConfigWithTheme<ThemeOptions>({
     title: 'inf-labs',
     description: 'Material für die Inf-Einf-Labs',
     lang: 'de-DE',
-    srcDir: './content',
+    srcDir: './local-content',
     cleanUrls: true,
     ignoreDeadLinks: true,
     appearance: false,
@@ -53,6 +53,7 @@ export default defineConfigWithTheme<ThemeOptions>({
         },
     },
     markdown: {
+        math: true,
         container: {
             tipLabel: 'Tipp',
             warningLabel: 'Warnung',
