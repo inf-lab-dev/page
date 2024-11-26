@@ -13,11 +13,11 @@
 
 <style lang="scss" scoped>
 .title {
-    font-size: 2rem;
-    margin: 0;
-    margin-top: 1rem;
-    font-weight: bold;
-    border-bottom: none;
+    font-size: 2rem !important;
+    margin: 0 !important;
+    margin-top: 1rem !important;
+    font-weight: bold !important;
+    border-bottom: none !important;
 
     &__subtitle {
         margin: 0;

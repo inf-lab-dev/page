@@ -1,0 +1,42 @@
+@use '~/github-markdown-css/github-markdown-dark.css';
+
+@at-root body {
+    color-scheme: dark;
+
+    --page-footer-border: #373c3e;
+    --page-footer-text: #aba499;
+
+    --focus-outlineColor: #1f6feb;
+
+    --bgColor-neutral-muted: #656c7633;
+    --borderColor-neutral-muted: #3d444db3;
+
+    --fgColor-default: #f0f6fc;
+    --bgColor-default: #0d1117;
+    --borderColor-default: #3d444d;
+
+    --fgColor-muted: #9198a1;
+    --bgColor-muted: #151b23;
+    --borderColor-muted: #3d444db3;
+
+    --fgColor-accent: #4493f8;
+    --borderColor-accent: #1f6feb;
+
+    --fgColor-success: #3fb950;
+    --borderColor-success: #238636;
+
+    --fgColor-attention: #d29922;
+    --borderColor-attention: #9e6a03;
+    --bgColor-attention-muted: #bb800926;
+
+    --fgColor-danger: #f85149;
+    --borderColor-danger: #da3633;
+
+    --fgColor-done: #ab7df8;
+    --borderColor-done: #8957e5;
+}
+
+// Code blocks
+.vp-code span {
+    color: var(--shiki-dark, inherit);
+}

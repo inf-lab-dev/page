@@ -26,8 +26,9 @@ $rope-color: #222;
     overflow: hidden;
     position: absolute;
     z-index: 1;
-    margin-top: -18px;
-    padding: 0;
+    margin-top: -18px !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
     pointer-events: none;
     width: 100%;
 

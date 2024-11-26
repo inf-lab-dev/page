@@ -1,0 +1,32 @@
+@mixin alert-variant($class, $variant: $class) {
+    &.#{$class} {
+        @extend .markdown-alert, .markdown-alert-#{$variant};
+
+        > .custom-block-title {
+            @extend .markdown-alert-#{$variant}, .markdown-alert-title;
+        }
+    }
+}
+
+.markdown-body {
+    .custom-block {
+        &.github-alert {
+            @extend .markdown-alert;
+
+            > .custom-block-title {
+                @extend .markdown-alert-title;
+            }
+
+            @include alert-variant('note');
+            @include alert-variant('tip');
+            @include alert-variant('important');
+            @include alert-variant('warning');
+            @include alert-variant('caution');
+        }
+
+        @include alert-variant('info', 'note');
+        @include alert-variant('tip');
+        @include alert-variant('warning');
+        @include alert-variant('danger', 'caution');
+    }
+}

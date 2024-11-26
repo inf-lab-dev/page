@@ -1,5 +1,5 @@
 <template>
-    <div class="container-lg px-3 my-5 markdown-body">
+    <div :class="[$style.wrapper, 'markdown-body']">
         <h1 v-if="site.title && !frontmatter.home" class="no-print">
             <a href="/">{{ site.title }}</a>
         </h1>
@@ -10,7 +10,7 @@
 
         <div
             v-if="theme.editLink"
-            class="no-print footer border-top border-gray-light mt-5 pt-3 text-right text-gray"
+            :class="[$style.wrapper__footer, 'no-print']"
         >
             Diese Seite ist Open Source.
             <a :href="editUrl">{{ theme.editLink.text }}</a
@@ -37,3 +37,32 @@ const editUrl = computed(() => {
     return '';
 });
 </script>
+
+<style lang="scss" module>
+$py: 16px;
+$mx: 32px;
+
+.wrapper {
+    max-width: 1012px;
+
+    padding-right: $py;
+    padding-left: $py;
+
+    margin-top: $mx !important;
+    margin-bottom: $mx !important;
+
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+
+.wrapper__footer {
+    border-top: 1px var(--page-footer-border) solid;
+    color: var(--page-footer-text);
+
+    text-align: right;
+
+    padding-top: $py;
+
+    margin-top: $mx;
+}
+</style>

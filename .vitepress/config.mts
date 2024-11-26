@@ -1,3 +1,4 @@
+import markdownItFootnote from 'markdown-it-footnote';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
@@ -6,15 +7,14 @@ import { ThemeOptions } from './theme';
 
 const STATIC_FILE_EXTENSIONS = ['sh', 'zip', 'py'];
 
-// https://vitepress.dev/reference/site-config
 export default defineConfigWithTheme<ThemeOptions>({
     title: 'inf-labs',
     description: 'Material für die Inf-Einf-Labs',
     lang: 'de-DE',
-    srcDir: './local-content',
+    srcDir: './local-content', // TODO: CHANGE BACK!
     cleanUrls: true,
     ignoreDeadLinks: true,
-    appearance: false,
+    appearance: 'force-auto',
     vite: {
         plugins: [
             viteStaticCopy({
@@ -53,13 +53,19 @@ export default defineConfigWithTheme<ThemeOptions>({
         },
     },
     markdown: {
+        config: (md) => md.use(markdownItFootnote),
         math: true,
+
+        codeCopyButtonTitle: 'Code kopieren',
+
         container: {
             tipLabel: 'Tipp',
             warningLabel: 'Warnung',
             dangerLabel: 'Achtung',
             infoLabel: 'Information',
-            detailsLabel: 'Details',
+            noteLabel: 'Hinweis',
+            importantLabel: 'Wichtig',
+            cautionLabel: 'Vorsicht',
         },
     },
 });

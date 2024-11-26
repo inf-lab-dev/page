@@ -29,7 +29,9 @@
         font-size: 1rem;
         font-weight: bold;
 
-        color: #ffffff;
+        color: #ffffff !important;
+        text-decoration: none !important;
+
         background: linear-gradient(
             to right,
             rgb(22, 163, 74),

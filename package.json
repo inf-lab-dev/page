@@ -10,12 +10,15 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.14.0",
+        "@types/markdown-it-footnote": "^3.0.4",
         "@types/node": "^22.9.0",
         "eslint": "^9.14.0",
         "eslint-plugin-vue": "^9.31.0",
         "globals": "^15.12.0",
+        "markdown-it-footnote": "^4.0.0",
         "markdown-it-mathjax3": "^4.3.2",
         "prettier": "^3.3.3",
+        "prettier-plugin-css-order": "^2.1.2",
         "prettier-plugin-organize-imports": "^4.1.0",
         "sass": "^1.77.6",
         "typescript-eslint": "^8.14.0",
@@ -25,6 +28,7 @@
         "vue-tsc": "^2.1.10"
     },
     "dependencies": {
+        "github-markdown-css": "^5.8.0",
         "monaco-editor": "^0.52.0",
         "normalize.css": "^8.0.1",
         "solution-zone": "git+https://github.com/inf-lab-dev/solution-zone.git#v1.0.5"
