@@ -1,6 +1,8 @@
 @use '~/github-markdown-css/github-markdown-light.css';
 
 @at-root body {
+    $fgColor-default: #1f2328;
+
     color-scheme: light;
 
     --page-footer-border: #e1e4e8;
@@ -11,7 +13,7 @@
     --bgColor-neutral-muted: #818b981f;
     --borderColor-neutral-muted: #d1d9e0b3;
 
-    --fgColor-default: #1f2328;
+    --fgColor-default: #{$fgColor-default};
     --borderColor-default: #d1d9e0;
     --bgColor-default: #ffffff;
 
@@ -37,6 +39,9 @@
 
     --fgColor-done: #8250df;
     --borderColor-done: #8250df;
+
+    // Define icons
+    @include code-copy-icons($fgColor-default);
 }
 
 // Code blocks

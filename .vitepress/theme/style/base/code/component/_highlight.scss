@@ -1,0 +1,57 @@
+@mixin highlight {
+    code {
+        .diff,
+        .highlighted {
+            display: inline-block;
+
+            transition: background-color 0.5s;
+
+            margin: 0 -24px;
+            padding: 0 24px;
+
+            width: calc(100% - 8px);
+        }
+
+        .highlighted {
+            background-color: var(--bgColor-accent-muted);
+
+            &.error {
+                background-color: var(--bgColor-danger-muted);
+            }
+
+            &.warning {
+                background-color: var(--bgColor-attention-muted);
+            }
+        }
+
+        .diff {
+            &::before {
+                position: absolute;
+
+                left: 10px;
+            }
+
+            &.remove {
+                opacity: 0.7;
+
+                background-color: var(--bgColor-danger-muted);
+
+                &::before {
+                    content: '-';
+
+                    color: var(--fgColor-attention);
+                }
+            }
+
+            &.add {
+                background-color: var(--bgColor-success-muted);
+
+                &::before {
+                    content: '+';
+
+                    color: var(--fgColor-success);
+                }
+            }
+        }
+    }
+}

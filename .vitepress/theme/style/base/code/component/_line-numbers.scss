@@ -1,0 +1,37 @@
+@mixin line-numbers {
+    &.line-numbers-mode {
+        padding-left: 32px;
+    }
+
+    .line-numbers-wrapper {
+        position: absolute;
+
+        top: 0;
+        bottom: 0;
+        left: 0;
+
+        z-index: 3;
+
+        transition:
+            border-color 0.5s,
+            color 0.5s;
+
+        border-right: 1px solid var(--borderColor-default);
+
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+        background-color: var(--bgColor-muted);
+
+        padding-top: 17px;
+
+        width: 32px;
+
+        color: var(--fgColor-muted);
+
+        font-size: var(--base-size-16);
+        line-height: 19.72px;
+        font-family: var(--fontStack-monospace);
+
+        text-align: center;
+    }
+}

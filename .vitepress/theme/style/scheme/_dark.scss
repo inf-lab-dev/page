@@ -1,6 +1,8 @@
 @use '~/github-markdown-css/github-markdown-dark.css';
 
 @at-root body {
+    $fgColor-default: #f0f6fc;
+
     color-scheme: dark;
 
     --page-footer-border: #373c3e;
@@ -11,7 +13,7 @@
     --bgColor-neutral-muted: #656c7633;
     --borderColor-neutral-muted: #3d444db3;
 
-    --fgColor-default: #f0f6fc;
+    --fgColor-default: #{$fgColor-default};
     --bgColor-default: #0d1117;
     --borderColor-default: #3d444d;
 
@@ -34,6 +36,9 @@
 
     --fgColor-done: #ab7df8;
     --borderColor-done: #8957e5;
+
+    // Define icons
+    @include code-copy-icons($fgColor-default);
 }
 
 // Code blocks

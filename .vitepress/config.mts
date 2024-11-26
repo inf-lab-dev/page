@@ -11,7 +11,7 @@ export default defineConfigWithTheme<ThemeOptions>({
     title: 'inf-labs',
     description: 'Material für die Inf-Einf-Labs',
     lang: 'de-DE',
-    srcDir: './local-content', // TODO: CHANGE BACK!
+    srcDir: './content', // TODO: CHANGE BACK!
     cleanUrls: true,
     ignoreDeadLinks: true,
     appearance: 'force-auto',

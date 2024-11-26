@@ -1,0 +1,58 @@
+@mixin code-copy-icons($color) {
+    @if type-of($color) == 'color' {
+        $hex: str-slice(ie-hex-str($color), 4);
+        $color: unquote('#{$hex}');
+    }
+
+    $color: '%23' + $color;
+
+    --icon-code-copy: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#{$color}" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"%3E%3Crect width="8" height="4" x="8" y="2" rx="1" ry="1"/%3E%3Cpath d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/%3E%3C/svg%3E');
+    --icon-code-copied: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#{$color}" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"%3E%3Crect width="8" height="4" x="8" y="2" rx="1" ry="1"/%3E%3Cpath d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/%3E%3Cpath d="m9 14 2 2 4-4"/%3E%3C/svg%3E');
+}
+
+@mixin copy-button {
+    > button.copy {
+        position: absolute;
+
+        top: 12px;
+        right: 12px;
+
+        opacity: 0;
+
+        z-index: 3;
+
+        transition:
+            border-color 0.25s,
+            background-color 0.25s,
+            opacity 0.25s;
+
+        cursor: pointer;
+
+        border: 1px solid var(--borderColor-muted);
+        border-radius: 4px;
+
+        background-image: var(--icon-code-copy);
+        background-position: 50%;
+        background-size: 20px;
+        background-repeat: no-repeat;
+        background-color: var(--bgColor-muted);
+
+        width: 30px;
+        height: 30px;
+    }
+
+    &:hover > button.copy,
+    > button.copy:focus {
+        opacity: 1;
+    }
+
+    > button.copy.copied,
+    > button.copy:hover.copied {
+        background-image: var(--icon-code-copied);
+    }
+
+    &:hover > button.copy + span.lang,
+    > button.copy:focus + span.lang {
+        opacity: 0;
+    }
+}
