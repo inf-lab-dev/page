@@ -28,6 +28,13 @@ html {
         @import 'scheme/dark';
     }
 
+    @media print {
+        &.dark {
+            // still use light theme when printing
+            @import 'scheme/light';
+        }
+    }
+
     body {
         background-color: var(--bgColor-default);
     }

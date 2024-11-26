@@ -26,6 +26,10 @@
                     visibility: visible;
                 }
             }
+
+            @media print {
+                display: none;
+            }
         }
 
         &:hover,
