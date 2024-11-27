@@ -2,6 +2,11 @@
 
 @at-root body {
     $fgColor-default: #1f2328;
+    $fgColor-accent: #0969da;
+    $fgColor-success: #1a7f37;
+    $fgColor-attention: #9a6700;
+    $fgColor-danger: #d1242f;
+    $fgColor-done: #8250df;
 
     color-scheme: light;
 
@@ -18,27 +23,34 @@
     --bgColor-muted: #f6f8fa;
     --borderColor-muted: #d1d9e0b3;
 
-    --fgColor-accent: #0969da;
+    --fgColor-accent: #{$fgColor-accent};
     --borderColor-accent: #0969da;
     --bgColor-accent-muted: #096bda33;
 
-    --fgColor-success: #1a7f37;
+    --fgColor-success: #{$fgColor-success};
     --borderColor-success: #1a7f37;
     --bgColor-success-muted: #1a7f3741;
 
-    --fgColor-attention: #9a6700;
+    --fgColor-attention: #{$fgColor-attention};
     --borderColor-attention: #9a6700;
     --bgColor-attention-muted: #fff8c5;
 
-    --fgColor-danger: #d1242f;
+    --fgColor-danger: #{$fgColor-danger};
     --borderColor-danger: #cf222e;
     --bgColor-danger-muted: #cf222d48;
 
-    --fgColor-done: #8250df;
+    --fgColor-done: #{$fgColor-done};
     --borderColor-done: #8250df;
 
     // Define icons
     @include code-copy-icons($fgColor-default);
+    @include alert-icons(
+        $fgColor-accent,
+        $fgColor-success,
+        $fgColor-done,
+        $fgColor-attention,
+        $fgColor-danger
+    );
 }
 
 // Code blocks
