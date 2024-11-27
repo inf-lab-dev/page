@@ -1,8 +1,8 @@
 <template>
     <h2 :class="$style.title">
-        <span class="title__keyword--advent">Advent</span>
-        <span class="title__keyword">&nbsp;of&nbsp;</span>
-        <span class="title__keyword--inf">InfLabs</span>
+        <span :class="$style['title__keyword--advent']">Advent</span>
+        <span :class="$style['title__keyword']">&nbsp;of&nbsp;</span>
+        <span :class="$style['title__keyword--inf']">InfLabs</span>
     </h2>
 
     <p :class="$style.title__subtitle">

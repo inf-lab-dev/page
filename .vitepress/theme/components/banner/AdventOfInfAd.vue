@@ -36,14 +36,12 @@ const { theme, isDark } = useData<ThemeOptions>();
 .advertisement {
     position: relative;
 
-    border: 2px solid #b1b3b4;
+    border: 2px solid var(--borderColor-default);
     border-radius: 0.25rem;
     overflow: hidden;
 
     &--dark {
-        border-color: #e2e2e2;
         background-color: #000000;
-        color: #e2e2e2;
     }
 
     &__content {
