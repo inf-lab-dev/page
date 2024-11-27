@@ -63,7 +63,7 @@ export default defineConfigWithTheme<ThemeOptions>({
             warningLabel: 'Warnung',
             dangerLabel: 'Achtung',
             infoLabel: 'Information',
-            noteLabel: 'Hinweis',
+            noteLabel: 'Information',
             importantLabel: 'Wichtig',
             cautionLabel: 'Vorsicht',
         },
