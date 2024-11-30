@@ -1,13 +1,22 @@
 <template>
-    <article v-if="theme.banner.advent" class="advertisement">
+    <article
+        v-if="theme.banner.advent"
+        :class="[
+            $style.advertisement,
+            'no-print',
+            {
+                [$style['advertisement--dark']]: isDark,
+            },
+        ]"
+    >
         <LightRope />
-        <section class="advertisement__content">
-            <div class="advertisement__segemnts">
+        <section :class="$style.advertisement__content">
+            <div :class="$style.advertisement__segemnts">
                 <Title />
                 <Text />
             </div>
 
-            <Wreath class="advertisement__wreath" />
+            <Wreath :class="$style.advertisement__wreath" />
         </section>
     </article>
 </template>
@@ -20,34 +29,28 @@ import Text from './advent/Text.vue';
 import Title from './advent/Title.vue';
 import Wreath from './advent/Wreath.vue';
 
-const { theme } = useData<ThemeOptions>();
+const { theme, isDark } = useData<ThemeOptions>();
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 .advertisement {
-    overflow: hidden;
     position: relative;
 
-    border: 2px solid #b1b3b4;
-    border-radius: 0.25rem;
+    border: 2px solid var(--borderColor-default);
+    border-radius: 0.5rem;
+    overflow: hidden;
 
-    @media print {
-        display: none;
-    }
-
-    @media (prefers-color-scheme: dark) {
+    &--dark {
         background-color: #000000;
-        color: #e2e2e2;
-        border-color: #e2e2e2;
     }
 
     &__content {
         display: flex;
         gap: 0.5rem;
+        z-index: 99;
 
         padding: 1.7rem 1rem;
         padding-bottom: 0;
-        z-index: 99;
     }
 
     &__segments {

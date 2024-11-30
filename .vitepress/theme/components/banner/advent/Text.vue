@@ -1,11 +1,11 @@
 <template>
-    <p class="text">
+    <p :class="$style.text">
         Du möchtest dich zusätzlich zum Übungsmaterial auf
         <em>inf.zone</em> mit dem Programmieren und algorithmischen Denken
         beschäftigen?
 
         <a
-            class="text__join"
+            :class="$style.text__join"
             href="https://advent.inf-lab.dev"
             target="_blank"
             rel="noreferer noopener"
@@ -14,29 +14,12 @@
     </p>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 .text {
     margin-top: 1rem;
 
     &__join {
         display: block;
-
-        max-width: fit-content;
-
-        margin-top: 1rem;
-        padding: 0.4em 0.9em;
-
-        font-size: 1rem;
-        font-weight: bold;
-
-        color: #ffffff;
-        background: linear-gradient(
-            to right,
-            rgb(22, 163, 74),
-            rgb(239, 68, 68)
-        );
-
-        border-radius: 0.25rem;
 
         transition:
             transform 0.2s,
@@ -44,11 +27,30 @@
 
         cursor: pointer;
 
+        margin-top: 1rem;
+
+        border-radius: 0.25rem;
+
+        background: linear-gradient(
+            to right,
+            rgb(22, 163, 74),
+            rgb(239, 68, 68)
+        );
+        padding: 0.4em 0.9em;
+
+        max-width: fit-content;
+
+        color: #ffffff !important;
+        font-weight: bold;
+
+        font-size: 1rem;
+        text-decoration: none !important;
+
         &:hover,
         &:focus {
-            text-decoration: none;
             transform: translateY(-2px);
             box-shadow: 0 6px 10px var(--shadow);
+            text-decoration: none;
         }
     }
 }

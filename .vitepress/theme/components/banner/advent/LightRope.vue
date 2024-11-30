@@ -1,10 +1,10 @@
 <template>
-    <ul class="lightrope">
-        <li v-for="_ in 42" class="lightrope__light"></li>
+    <ul :class="$style.lightrope">
+        <li v-for="_ in 42" :class="$style.lightrope__light"></li>
     </ul>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 // Adapted from https://codepen.io/tobyj/pen/QjvEex
 
 $globe-width: 12px;
@@ -15,42 +15,43 @@ $light-off-opacity: 0.4;
 $rope-color: #222;
 
 @mixin glow($background-opacity, $shadow-opacity) {
-    background: rgba(var(--color), $background-opacity);
     box-shadow: 0px calc($globe-height / 6) calc($globe-width * 2) $globe-spread
         rgba(var(--color), $shadow-opacity);
+    background: rgba(var(--color), $background-opacity);
 }
 
 .lightrope {
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
     position: absolute;
     z-index: 1;
-    margin-top: -18px;
-    padding: 0;
-    pointer-events: none;
+    margin-top: -18px !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
     width: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    text-align: center;
+    white-space: nowrap;
 
     &__light {
         --color: 22, 163, 74;
 
         @include glow(1, 1);
+        display: inline-block;
 
         position: relative;
-        display: inline-block;
-        list-style: none;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-fill-mode: both;
 
-        padding: 0;
+        animation-name: flash;
         margin: calc($globe-spacing / 2);
         border-radius: 50%;
 
+        padding: 0;
+
         width: $globe-width;
         height: $globe-height;
-
-        animation-name: flash;
-        animation-duration: 2s;
-        animation-fill-mode: both;
-        animation-iteration-count: infinite;
+        list-style: none;
 
         @media (prefers-reduced-motion) {
             animation-name: none;
@@ -85,33 +86,31 @@ $rope-color: #222;
         }
 
         &::before {
-            content: '';
-
             position: absolute;
-            background-color: $rope-color;
 
             top: calc(0px - ($globe-height / 6));
             left: 1px;
 
             border-radius: 3px;
+            background-color: $rope-color;
 
             width: ($globe-width - 2);
             height: calc($globe-height / 3);
+            content: '';
         }
 
         &::after {
-            content: '';
-
             position: absolute;
 
             top: calc(0px - $globe-height / 2);
             left: $globe-width - 3;
+            border-bottom: solid $rope-color 2px;
+
+            border-radius: 50%;
 
             width: $globe-spacing + 12;
             height: calc($globe-height / 3 * 2);
-
-            border-radius: 50%;
-            border-bottom: solid $rope-color 2px;
+            content: '';
         }
     }
 }

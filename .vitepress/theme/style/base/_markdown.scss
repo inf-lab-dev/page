@@ -1,0 +1,6 @@
+.markdown-body {
+    // we dont need the element created by the plugin as GFM styles based on the "footnotes" class
+    .footnotes-sep {
+        display: none;
+    }
+}

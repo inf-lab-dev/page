@@ -1,0 +1,36 @@
+@import 'component/line-numbers';
+@import 'component/focused-lines';
+@import 'component/highlight';
+@import 'component/copy';
+@import 'group';
+
+.markdown-body {
+    div[class*='language-'] {
+        position: relative;
+
+        @include line-numbers;
+        @include focused-lines;
+        @include copy-button;
+        @include highlight;
+
+        > span.lang {
+            position: absolute;
+
+            top: 2px;
+            right: 8px;
+
+            z-index: 2;
+
+            transition:
+                color 0.4s,
+                opacity 0.4s;
+
+            color: var(--fgColor-muted);
+
+            font-weight: var(--base-text-weight-semibold);
+            font-size: var(--base-size-14);
+
+            user-select: none;
+        }
+    }
+}

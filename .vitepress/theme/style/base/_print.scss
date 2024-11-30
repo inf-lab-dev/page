@@ -1,0 +1,10 @@
+// General print view (not theme dependent)
+@media print {
+    .no-print {
+        display: none;
+    }
+
+    pre.highlight > code {
+        white-space: pre-line;
+    }
+}

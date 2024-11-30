@@ -1,0 +1,59 @@
+@use '~/github-markdown-css/github-markdown-light.css';
+
+@at-root body {
+    $fgColor-default: #1f2328;
+    $fgColor-accent: #0969da;
+    $fgColor-success: #1a7f37;
+    $fgColor-attention: #9a6700;
+    $fgColor-danger: #d1242f;
+    $fgColor-done: #8250df;
+
+    color-scheme: light;
+
+    --focus-outlineColor: #0969da;
+
+    --bgColor-neutral-muted: #818b981f;
+    --borderColor-neutral-muted: #d1d9e0b3;
+
+    --fgColor-default: #{$fgColor-default};
+    --borderColor-default: #d1d9e0;
+    --bgColor-default: #ffffff;
+
+    --fgColor-muted: #59636e;
+    --bgColor-muted: #f6f8fa;
+    --borderColor-muted: #d1d9e0b3;
+
+    --fgColor-accent: #{$fgColor-accent};
+    --borderColor-accent: #0969da;
+    --bgColor-accent-muted: #096bda33;
+
+    --fgColor-success: #{$fgColor-success};
+    --borderColor-success: #1a7f37;
+    --bgColor-success-muted: #1a7f3741;
+
+    --fgColor-attention: #{$fgColor-attention};
+    --borderColor-attention: #9a6700;
+    --bgColor-attention-muted: #fff8c5;
+
+    --fgColor-danger: #{$fgColor-danger};
+    --borderColor-danger: #cf222e;
+    --bgColor-danger-muted: #cf222d48;
+
+    --fgColor-done: #{$fgColor-done};
+    --borderColor-done: #8250df;
+
+    // Define icons
+    @include code-copy-icons($fgColor-default);
+    @include alert-icons(
+        $fgColor-accent,
+        $fgColor-success,
+        $fgColor-done,
+        $fgColor-attention,
+        $fgColor-danger
+    );
+}
+
+// Code blocks
+.vp-code span {
+    color: var(--shiki-light, inherit);
+}
