@@ -37,7 +37,7 @@ const { theme, isDark } = useData<ThemeOptions>();
     position: relative;
 
     border: 2px solid var(--borderColor-default);
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
     overflow: hidden;
 
     &--dark {
