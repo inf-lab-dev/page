@@ -1,13 +1,7 @@
 <template>
     <article
         v-if="theme.banner.advent"
-        :class="[
-            $style.advertisement,
-            'no-print',
-            {
-                [$style['advertisement--dark']]: isDark,
-            },
-        ]"
+        :class="[$style.advertisement, 'no-print']"
     >
         <LightRope />
         <section :class="$style.advertisement__content">
@@ -29,7 +23,7 @@ import Text from './advent/Text.vue';
 import Title from './advent/Title.vue';
 import Wreath from './advent/Wreath.vue';
 
-const { theme, isDark } = useData<ThemeOptions>();
+const { theme } = useData<ThemeOptions>();
 </script>
 
 <style lang="scss" module>
@@ -40,8 +34,13 @@ const { theme, isDark } = useData<ThemeOptions>();
     border-radius: 0.5rem;
     overflow: hidden;
 
-    &--dark {
-        background-color: #000000;
+    @at-root {
+        // select using attribute to not get module class
+        html[class~='dark'] {
+            .advertisement {
+                background-color: #000000;
+            }
+        }
     }
 
     &__content {
