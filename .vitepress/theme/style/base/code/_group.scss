@@ -81,7 +81,8 @@
         }
 
         .blocks {
-            div[class*='language-'] {
+            div[class*='language-'],
+            .encrypted-solution {
                 display: none;
 
                 pre {

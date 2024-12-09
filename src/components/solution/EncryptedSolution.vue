@@ -7,18 +7,7 @@
             },
         ]"
     >
-        <div v-if="!decryptedSolution" class="wrapper__locked">
-            <span class="wrapper__lock">🔒</span>
-            <p>
-                <strong class="wrapper__header">
-                    Hier verbirgt sich die verschlüsselte Lösung!
-                </strong>
-                <span>
-                    Um diese anzuzeigen, wird ein spezieller Link benötigt. Wie
-                    du diesen erhalten kannst, wurde im Tutorium mitgeteilt.
-                </span>
-            </p>
-        </div>
+        <SolutionLock v-if="!decryptedSolution" />
         <CodeEditor
             v-else
             v-model="decryptedSolution.code"
@@ -33,13 +22,28 @@
 import { DecryptedSolution, decryptFile } from 'solution-zone';
 import { useData } from 'vitepress';
 import { computed, onMounted, shallowRef, watch } from 'vue';
-import { data as encryptedSolutions } from '../loader/encrypted-solutions.data';
+import { data as encryptedSolutions } from '../../loader/encrypted-solutions.data';
 import CodeEditor, {
     EditorOptions,
     EnhancedEditor,
 } from './util/CodeEditor.vue';
+import SolutionLock from './util/SolutionLock.vue';
 
 const { isDark } = useData();
+
+const emit = defineEmits<{
+    decrypted: [solution: DecryptedSolution];
+    failed: [error: unknown];
+}>();
+
+const props = withDefaults(
+    defineProps<{
+        sourcePrefix?: string;
+    }>(),
+    {
+        sourcePrefix: '',
+    },
+);
 
 const editor = shallowRef<EnhancedEditor>();
 const decryptedSolution = shallowRef<DecryptedSolution>();
@@ -51,9 +55,10 @@ const solution = computed(() => {
         const key = url.searchParams.get('key');
         const source = url.searchParams.get('source') ?? 'values';
 
-        const sourcePath = `${url.pathname}${source}.solution.json`.substring(
-            1,
-        );
+        const sourcePath =
+            `${url.pathname}${props.sourcePrefix}${source}.solution.json`.substring(
+                1,
+            );
 
         if (key != null && sourcePath in encryptedSolutions) {
             return { key, source: encryptedSolutions[sourcePath] };
@@ -106,10 +111,20 @@ async function loadSolution() {
         throw new ReferenceError('Cannot load solution from "NULL" source.');
     }
 
-    decryptedSolution.value = await decryptFile(
-        solution.value.key,
-        solution.value.source,
-    );
+    try {
+        decryptedSolution.value = await decryptFile(
+            solution.value.key,
+            solution.value.source,
+        );
+
+        // propagage the success
+        emit('decrypted', decryptedSolution.value);
+    } catch (error) {
+        emit('failed', error);
+
+        // rethrow the error
+        throw error;
+    }
 }
 
 function onEditorLoaded(editorInstance: EnhancedEditor) {
@@ -128,27 +143,12 @@ onMounted(() => {
 });
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .wrapper {
-    height: 100%;
-    width: 100%;
-
     display: flex;
     flex-direction: column;
-
-    .wrapper__locked {
-        display: flex;
-        gap: 10px;
-    }
-
-    .wrapper__lock {
-        font-size: 200%;
-    }
-
-    .wrapper__header {
-        display: block;
-        font-weight: bold;
-    }
+    width: 100%;
+    height: 100%;
 
     .wrapper__editor {
         flex-grow: 1;
@@ -156,7 +156,10 @@ onMounted(() => {
 }
 
 .wrapper--rendered {
-    outline: 1px solid #eaecef;
+    border: 1px solid var(--borderColor-default);
+
+    // subtract the border on the right
+    width: calc(100% - 1px);
     min-height: 30vh;
 }
 </style>

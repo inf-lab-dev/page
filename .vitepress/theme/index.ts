@@ -1,6 +1,7 @@
 import type { Theme } from 'vitepress';
-import EncryptedSolution from '../../src/components/EncryptedSolution.vue';
 import MaterialFAQ from '../../src/components/MaterialFAQ.vue';
+import EncryptedSolution from '../../src/components/solution/EncryptedSolution.vue';
+import EncryptedSolutionGroup from '../../src/components/solution/EncryptedSolutionGroup.vue';
 import Layout from './Layout.vue';
 import './style/style.scss';
 
@@ -19,6 +20,7 @@ export default {
     enhanceApp({ app }) {
         // make the commonly used components available everywhere
         app.component('EncryptedSolution', EncryptedSolution);
+        app.component('EncryptedSolutionGroup', EncryptedSolutionGroup);
         app.component('MaterialFAQ', MaterialFAQ);
     },
 } satisfies Theme;
