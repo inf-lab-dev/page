@@ -38,7 +38,7 @@ const emit = defineEmits<{
 
 const props = withDefaults(
     defineProps<{
-        encryptionKey?: string;
+        decryptionKey?: string;
         sourcePrefix?: string;
         source?: string;
     }>(),
@@ -54,7 +54,7 @@ const solution = computed(() => {
     if (!import.meta.env.SSR) {
         const url = new URL(location.href);
 
-        const key = props.encryptionKey ?? url.searchParams.get('key');
+        const key = props.decryptionKey ?? url.searchParams.get('key');
         const source =
             props.source ?? url.searchParams.get('source') ?? 'values';
 
