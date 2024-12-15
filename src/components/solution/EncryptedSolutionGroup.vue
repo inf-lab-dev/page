@@ -36,6 +36,8 @@
             >
                 <EncryptedSolution
                     :source-prefix="member.sourcePrefix"
+                    :source="member.source"
+                    :encryption-key="member.encryptionKey"
                     @decrypted="renderers[index].state = 'success'"
                     @failed="renderers[index].state = 'error'"
                 />
@@ -51,7 +53,9 @@ import SolutionLock from './util/SolutionLock.vue';
 
 export interface SolutionMember {
     name: string;
+    encryptionKey?: string;
     sourcePrefix?: string;
+    source?: string;
 }
 
 interface SolutionRenderer {
