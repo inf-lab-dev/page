@@ -43,7 +43,7 @@ const props = withDefaults(
         source?: string;
     }>(),
     {
-        sourcePrefix: '%s',
+        sourcePrefix: '',
     },
 );
 
