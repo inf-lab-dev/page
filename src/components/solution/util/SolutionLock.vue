@@ -1,7 +1,7 @@
 <template>
     <div class="solutionLock">
         <span class="solutionLock__lock">🔒</span>
-        <p>
+        <p class="solutionLock__text">
             <strong class="solutionLock__header">
                 Hier verbirgt sich die verschlüsselte Lösung!
             </strong>
@@ -16,6 +16,10 @@
 <style lang="scss" scoped>
 .solutionLock {
     display: flex;
+
+    .solutionLock__text {
+        margin-bottom: 0;
+    }
 
     .solutionLock__lock {
         font-size: 200%;
