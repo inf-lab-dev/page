@@ -12,14 +12,14 @@ export default defineConfigWithTheme<ThemeOptions>({
     title: 'inf-labs',
     description: 'Material für die Inf-Einf-Labs',
     lang: 'de-DE',
-    srcDir: './local-content',
+    srcDir: './content',
     cleanUrls: true,
     ignoreDeadLinks: true,
     appearance: 'force-auto',
     vite: {
         plugins: [
             zipPlugin({
-                src: './local-content',
+                src: './content',
                 publicUrl: 'https://inf-lab.dev',
             }),
             viteStaticCopy({
