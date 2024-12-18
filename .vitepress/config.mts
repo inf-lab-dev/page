@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'url';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { defineConfigWithTheme } from 'vitepress';
+import { zipPlugin } from './plugin/zip';
 import { ThemeOptions } from './theme';
 
 const STATIC_FILE_EXTENSIONS = ['sh', 'zip', 'py'];
@@ -17,6 +18,10 @@ export default defineConfigWithTheme<ThemeOptions>({
     appearance: 'force-auto',
     vite: {
         plugins: [
+            zipPlugin({
+                src: './content',
+                publicUrl: 'https://inf-lab.dev',
+            }),
             viteStaticCopy({
                 targets: [
                     {
