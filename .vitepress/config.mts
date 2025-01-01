@@ -54,7 +54,7 @@ export default defineConfigWithTheme<ThemeOptions>({
             text: 'Verbessere diese Seite',
         },
         banner: {
-            advent: true,
+            advent: false,
         },
     },
     markdown: {
