@@ -1,5 +1,6 @@
 import { createWriteStream } from 'node:fs';
-import { writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { dirname } from 'node:path';
 import type { Plugin, ResolvedConfig } from 'vite';
 import { ZipPluginOptions } from '..';
 import { collectManifests, translateFileName } from '../file';
@@ -18,6 +19,8 @@ import {
  * @param to the destination of the zip
  */
 async function saveZip(includes: ResolvedIncludeEntry[], to: string) {
+    await mkdir(dirname(to), { recursive: true });
+
     const archive = createArchive(includes);
     const stream = createWriteStream(to, { encoding: 'utf8' });
 
@@ -41,6 +44,8 @@ async function saveShellScript(
     config: SelfExtractionConfiguration,
     to: string,
 ) {
+    await mkdir(dirname(to), { recursive: true });
+
     const script = createShellScript(zipUrl, config);
 
     await writeFile(to, script, { encoding: 'utf8' });
