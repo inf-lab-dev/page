@@ -6,7 +6,7 @@ import { defineConfigWithTheme } from 'vitepress';
 import { zipPlugin } from './plugin/zip';
 import { ThemeOptions } from './theme';
 
-const STATIC_FILE_EXTENSIONS = ['sh', 'zip', 'py'];
+const STATIC_FILE_EXTENSIONS = ['sh', 'zip', 'py', 'hosted.js'];
 
 export default defineConfigWithTheme<ThemeOptions>({
     title: 'inf-labs',
