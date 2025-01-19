@@ -129,12 +129,10 @@ async function resolveIncludes(
         });
 
         for (const file of files) {
-            const directoryDestination =
-                include.dest?.replace(/\/$/, '') ?? path.basename(file);
+            const name = path.basename(file);
+            const directory = include.dest?.replace(/\/$/, '');
 
-            const destination = directoryDestination.endsWith('/')
-                ? path.join(directoryDestination, path.basename(file))
-                : directoryDestination;
+            const destination = directory ? path.join(directory, name) : name;
 
             resolved.push({ src: file, dest: destination });
         }
