@@ -52,6 +52,7 @@ const decryptedSolution = shallowRef<DecryptedSolution>();
 
 const solution = computed(() => {
     if (!import.meta.env.SSR) {
+        console.log(encryptedSolutions);
         const url = new URL(location.href);
 
         const key = props.decryptionKey ?? url.searchParams.get('key');
