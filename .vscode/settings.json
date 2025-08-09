@@ -19,6 +19,5 @@
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
         // hide git submodule in vscode
-       "src/page/content": true
     }
 }
