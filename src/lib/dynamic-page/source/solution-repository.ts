@@ -11,7 +11,10 @@ export default defineDynamicPageSource({
         });
 
         return entries
-            .filter((path) => path.endsWith('.md'))
+            .filter(
+                // Only select markdown (Non-README) files
+                (path) => path.endsWith('.md') && !path.endsWith('README.md'),
+            )
             .map((path) => ({
                 path: path.replace(/\.md$/, ''),
                 frontmatter: {

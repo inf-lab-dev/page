@@ -35,6 +35,6 @@
         "github-markdown-css": "^5.8.0",
         "monaco-editor": "^0.52.0",
         "normalize.css": "^8.0.1",
-        "solution-zone": "git+https://github.com/inf-lab-dev/solution-zone.git#v1.0.5"
+        "solution-zone": "github:inf-lab-dev/solution-zone#v2.0.0"
     }
 }

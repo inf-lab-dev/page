@@ -31,21 +31,24 @@ export default createContentLoader(
 
             return Object.fromEntries(
                 await Promise.all(
-                    contentData.map(async (page) => [
-                        // Normalize the path as it would appear on the page
-                        // this means we need to strip the prefix +2, to ensure the last "." and "/"
-                        // is also correctly removed.
-                        page.url.slice(pathPrefix.length + 2),
+                    contentData
+                        // Ignore the README files
+                        .filter((page) => !page.url.endsWith('README'))
+                        .map(async (page) => [
+                            // Normalize the path as it would appear on the page
+                            // this means we need to strip the prefix +2, to ensure the last "." and "/"
+                            // is also correctly removed.
+                            page.url.slice(pathPrefix.length + 2),
 
-                        {
-                            title: getPageTitle(page),
+                            {
+                                title: getPageTitle(page),
 
-                            content: await encryptString(
-                                publicKeyPem,
-                                page.html!,
-                            ),
-                        },
-                    ]),
+                                content: await encryptString(
+                                    publicKeyPem,
+                                    page.html!,
+                                ),
+                            },
+                        ]),
                 ),
             );
         },

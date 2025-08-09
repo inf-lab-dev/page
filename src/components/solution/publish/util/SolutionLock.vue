@@ -1,5 +1,5 @@
 <template>
-    <div class="solutionLock">
+    <article class="solutionLock">
         <span class="solutionLock__lock">🔒</span>
         <p class="solutionLock__text">
             <strong class="solutionLock__header">
@@ -10,12 +10,13 @@
                 diesen erhalten kannst, wurde im Tutorium mitgeteilt.
             </span>
         </p>
-    </div>
+    </article>
 </template>
 
 <style lang="scss" scoped>
 .solutionLock {
     display: flex;
+    gap: var(--base-size-8);
 
     .solutionLock__text {
         margin-bottom: 0;

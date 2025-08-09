@@ -8,9 +8,9 @@ export default defineDynamicPageSource({
         const entries = await glob('**/*.solution.json', {
             cwd: `${PAGE_SOURCE_PATH}/content`,
         });
-        console.log(entries);
+
         return entries.map((path) => ({
-            path: path.replace(/\.json$/, ''),
+            path: path.replace(/\.solution\.json$/, ''),
             title: path,
         }));
     },

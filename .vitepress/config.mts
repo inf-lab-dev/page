@@ -16,8 +16,13 @@ export default defineConfig<ThemeOptions>({
     cleanUrls: true,
     ignoreDeadLinks: true,
     appearance: 'force-auto',
+
+    // Ignore the "contents" readme, as otherwise the VitePress engine
+    // will fail with an error like "Cannot read properties of undefined (reading 'imports')"
+    // as the modules are duplicated (i.e. we have 2 readmes, one from solution, one from labs).
+    srcExclude: ['content/README.md'],
+
     rewrites: {
-        // Ensure the actual content folder acts as the page's root
         'content/:path*': ':path*',
     },
     vite: {
@@ -27,6 +32,7 @@ export default defineConfig<ThemeOptions>({
                 publicUrl: 'https://inf-lab.dev',
             }),
             viteStaticCopy({
+                silent: true,
                 targets: [
                     {
                         src: `../src/page/content/**/*.{${STATIC_FILE_EXTENSIONS.join(',')}}`,
