@@ -44,7 +44,7 @@ const solution = computed(() => {
 
 async function loadSolution() {
     if ((solution.value.source.files ?? []).length === 0) {
-        throw new ReferenceError('Cannot load solution without files..');
+        throw new ReferenceError('Cannot load solution without files.');
     }
 
     try {
