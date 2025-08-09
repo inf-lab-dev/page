@@ -1,0 +1,6 @@
+{
+    "include": ["template/index.html"],
+    "self_extraction": {
+        "post_user_commands": ["cd lab-watchlist", "code index.html"]
+    }
+}

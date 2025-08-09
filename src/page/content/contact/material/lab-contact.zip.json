@@ -1,0 +1,9 @@
+{
+    "include": [
+        "template/app.py",
+        { "src": "template/templates/*.html", "dest": "templates" }
+    ],
+    "self_extraction": {
+        "post_user_commands": ["cd lab-contact", "code app.py"]
+    }
+}

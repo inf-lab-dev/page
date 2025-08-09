@@ -1,0 +1,6 @@
+{
+    "include": ["template/city_weather.py", "template/filter.py", "template/main.py", "template/weather_service.py"],
+    "self_extraction": {
+        "post_user_commands": ["cd lab-weather", "code main.py"]
+    }
+}

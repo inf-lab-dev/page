@@ -1,0 +1,25 @@
+<!-- extend the default "layout" -->
+{% extends "layout.html" %}
+
+<!-- write content to the body block -->
+{% block body %}
+<!-- render a big red box -->
+<div class="alert alert-danger">{{ message }}</div>
+
+<!-- allow the user to navigate back -->
+<button
+    class="btn btn-secondary"
+    id="back"
+>
+    Go back
+</button>
+
+<script>
+    let backButton = document.querySelector('#back');
+
+    backButton.addEventListener('click', function () {
+        // this function navigates to the previous URL the user has visited
+        history.back();
+    });
+</script>
+{% endblock %}

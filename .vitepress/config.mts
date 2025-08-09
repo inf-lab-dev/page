@@ -2,30 +2,34 @@ import markdownItFootnote from 'markdown-it-footnote';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
-import { defineConfigWithTheme } from 'vitepress';
+import { defineConfig } from 'vitepress';
 import { zipPlugin } from './plugin/zip';
 import { ThemeOptions } from './theme';
 
 const STATIC_FILE_EXTENSIONS = ['sh', 'zip', 'py', 'hosted.js'];
 
-export default defineConfigWithTheme<ThemeOptions>({
+export default defineConfig<ThemeOptions>({
     title: 'inf-labs',
     description: 'Material für die Inf-Einf-Labs',
     lang: 'de-DE',
-    srcDir: './content',
+    srcDir: './src/page',
     cleanUrls: true,
     ignoreDeadLinks: true,
     appearance: 'force-auto',
+    rewrites: {
+        // Ensure the actual content folder acts as the page's root
+        'content/:path*': ':path*',
+    },
     vite: {
         plugins: [
             zipPlugin({
-                src: './content',
+                src: './src/page/content',
                 publicUrl: 'https://inf-lab.dev',
             }),
             viteStaticCopy({
                 targets: [
                     {
-                        src: `../content/**/*.{${STATIC_FILE_EXTENSIONS.join(',')}}`,
+                        src: `../src/page/content/**/*.{${STATIC_FILE_EXTENSIONS.join(',')}}`,
                         dest: '',
                         rename: (_file, _extension, absolutePath) => {
                             const contentPath = path.resolve('./content');
@@ -58,7 +62,7 @@ export default defineConfigWithTheme<ThemeOptions>({
         },
     },
     markdown: {
-        config: (md) => md.use(markdownItFootnote),
+        config: (md) => void md.use(markdownItFootnote),
         math: true,
 
         codeCopyButtonTitle: 'Code kopieren',
