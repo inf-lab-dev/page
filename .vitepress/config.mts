@@ -1,12 +1,8 @@
 import markdownItFootnote from 'markdown-it-footnote';
-import path from 'node:path';
 import { fileURLToPath } from 'url';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { defineConfig } from 'vitepress';
 import { zipPlugin } from './plugin/zip';
 import { ThemeOptions } from './theme';
-
-const STATIC_FILE_EXTENSIONS = ['sh', 'zip', 'py', 'hosted.js'];
 
 export default defineConfig<ThemeOptions>({
     title: 'inf-labs',
@@ -30,23 +26,6 @@ export default defineConfig<ThemeOptions>({
             zipPlugin({
                 src: './src/page/content',
                 publicUrl: 'https://inf-lab.dev',
-            }),
-            viteStaticCopy({
-                silent: true,
-                targets: [
-                    {
-                        src: `../src/page/content/**/*.{${STATIC_FILE_EXTENSIONS.join(',')}}`,
-                        dest: '',
-                        rename: (_file, _extension, absolutePath) => {
-                            const contentPath = path.resolve('./content');
-                            const resolvedName = absolutePath.substring(
-                                contentPath.length + 1,
-                            );
-
-                            return resolvedName;
-                        },
-                    },
-                ],
             }),
         ],
         ssr: {
