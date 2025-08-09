@@ -13,6 +13,5 @@ const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
     },
 });
 
-// Use "key" as file extension, as otherwise Vite will refuse to load it
-fs.writeFileSync('public.key', publicKey, { encoding: 'utf8' });
+fs.writeFileSync('public.pem', publicKey, { encoding: 'utf8' });
 fs.writeFileSync('private.pem', privateKey, { encoding: 'utf8' });
