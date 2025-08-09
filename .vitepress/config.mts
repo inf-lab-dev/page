@@ -42,6 +42,7 @@ export default defineConfig<ThemeOptions>({
                     },
                 ],
             }),
+            //vitePlainText([/\.key$/], { namedExport: false }),
         ],
         ssr: {
             noExternal: ['monaco-editor'],

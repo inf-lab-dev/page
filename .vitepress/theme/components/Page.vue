@@ -27,10 +27,15 @@ import AdventOfInfAd from './banner/AdventOfInfAd.vue';
 const { site, page, theme, frontmatter } = useData();
 
 const editUrl = computed(() => {
-    if (theme.value.editLink) {
-        return theme.value.editLink.pattern.replace(
+    const editLinkPattern =
+        frontmatter.value?.editLink?.pattern ?? theme.value.editLink?.pattern;
+    const editLinkStripPathPrefix =
+        frontmatter.value.editLink?.stripPathPrefix ?? '';
+
+    if (editLinkPattern) {
+        return editLinkPattern.replace(
             ':path',
-            page.value.relativePath,
+            page.value.relativePath.substring(editLinkStripPathPrefix.length),
         );
     }
 

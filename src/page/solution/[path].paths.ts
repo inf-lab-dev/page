@@ -10,7 +10,9 @@ export default {
             })
             .filter((path) => path.endsWith('.md'))
             .map((path) => {
-                return { params: { path: path.replace(/\.md$/, '') } };
+                return {
+                    params: { path: path.replace(/\.md$/, '') },
+                };
             });
     },
 };
