@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
+import { data as solutionRepository } from '@/loader/solution-repository.data';
 import { computed } from 'vue';
-import { data as solutionRepository } from '../loader/solution-repository.data';
 
 const props = defineProps<{
     requestedPage: string;

@@ -19,10 +19,10 @@
 </template>
 
 <script setup lang="ts">
+import { data as encryptedSolutions } from '@/loader/encrypted-solutions.data';
 import { DecryptedSolution, decryptFile } from 'solution-zone';
 import { useData } from 'vitepress';
 import { computed, onMounted, shallowRef, watch } from 'vue';
-import { data as encryptedSolutions } from '../../loader/encrypted-solutions.data';
 import CodeEditor, {
     EditorOptions,
     EnhancedEditor,
