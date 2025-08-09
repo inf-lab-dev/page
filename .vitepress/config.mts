@@ -79,4 +79,17 @@ export default defineConfig<ThemeOptions>({
             cautionLabel: 'Vorsicht',
         },
     },
+    transformPageData(pageData) {
+        // Allow to set some page properties for dynamic routes
+        if (pageData.params?.title) {
+            pageData.title = pageData.params.title;
+        }
+
+        if (pageData.params?.frontmatter) {
+            pageData.frontmatter = {
+                ...pageData.frontmatter,
+                ...pageData.params.frontmatter,
+            };
+        }
+    },
 });

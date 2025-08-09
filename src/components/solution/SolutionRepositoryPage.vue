@@ -7,11 +7,14 @@
 <script setup lang="ts">
 import EncryptedContent from '@/components/crypto/EncryptedContent.vue';
 import { data as solutionRepository } from '@/loader/solution-repository.data';
+import { useData } from 'vitepress';
 import { computed, onMounted, watch } from 'vue';
 
 const props = defineProps<{
     requestedPage: string;
 }>();
+
+const pageData = useData();
 
 const pageContent = computed(() => solutionRepository[props.requestedPage]);
 

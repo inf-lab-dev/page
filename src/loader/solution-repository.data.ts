@@ -7,7 +7,7 @@ import {
     SOLUTIONS_REPOSITORY_PATH,
 } from '../env';
 import { encryptString } from '../lib/crypto';
-import { getPageTitle } from '../lib/dynamic-page';
+import { getPageTitle } from '../lib/dynamic-page/utils';
 
 type Data = Record<string, { title?: string; content: string }>;
 
