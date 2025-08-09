@@ -8,9 +8,13 @@
  */
 
 import { DynamicPageSource } from '../lib/dynamic-page/source';
-import solutionRepository from '../lib/dynamic-page/source/solution-repository';
+import solutionJsonSource from '../lib/dynamic-page/source/solution-json';
+import solutionRepositorySource from '../lib/dynamic-page/source/solution-repository';
 
-const sources: DynamicPageSource[] = [solutionRepository];
+const sources: DynamicPageSource[] = [
+    solutionRepositorySource,
+    solutionJsonSource,
+];
 
 export default {
     async paths() {

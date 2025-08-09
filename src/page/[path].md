@@ -3,9 +3,8 @@
  * Dynamic Pages, see `[path].paths.ts` for further explanation.
  */
 import SolutionRepositoryPage from '@/components/solution/SolutionRepositoryPage.vue';
-import NotFound from '@/../.vitepress/theme/components/NotFound.vue';
+import PublishedSolutionPage from '@/components/solution/publish/PublishedSolutionPage.vue';
 </script>
 
 <SolutionRepositoryPage v-if="$params.type === 'solution-repository'" :requestedPage="$params.path" />
-
-<NotFound v-else />
+<PublishedSolutionPage v-else-if="$params.type === 'solution-json'" :requestedPage="$params.path" />
