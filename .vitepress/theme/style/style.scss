@@ -38,6 +38,10 @@ html {
     }
 
     @media print {
+        // Include background images when printing
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+
         &.dark {
             // still use light theme when printing
             @import 'scheme/light';

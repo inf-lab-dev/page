@@ -26,4 +26,22 @@
     kbd {
         @include markdown-kbd;
     }
+
+    @media print {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            // Dont break after headers
+            break-after: avoid;
+            page-break-after: avoid;
+
+            // Move the top-header to the top
+            &:first-child {
+                margin-top: calc(var(--base-size-24) * -1);
+            }
+        }
+    }
 }
