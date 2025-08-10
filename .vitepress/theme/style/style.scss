@@ -44,6 +44,9 @@ html {
         }
     }
 
+    // Prevent layout-shifts
+    scrollbar-gutter: stable both-edges;
+
     body {
         background-color: var(--bgColor-default);
 
