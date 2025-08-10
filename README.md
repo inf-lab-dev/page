@@ -23,3 +23,8 @@ Some files within the [`content`](./content/) directory get handled specially, t
 
 This file allows the creation of dynamic zip files, its contents represent the `ZipManifest` interface from [`manifest.ts`](./.vitepress/plugin/zip/manifest.ts#L36).
 Please consult the linked file for documentation. The resulting files can then be accessed where the manifest file would be, except the `.json` extension needs to be dropped (or replaced by `.sh`).
+
+#### `.solution.json`
+
+This file allows the creation of dynamic solution pages, its contents represent the `EncryptedSolution` interface from [`solution-zone/encrypted.ts`](https://github.com/inf-lab-dev/solution-zone/blob/main/src/solution/types/encrypted.ts#L6).
+Please consult the linked file for documentation. The resulting files can then be accessed where the manifest file would be, except the `.solution.json` extension needs to be dropped.
