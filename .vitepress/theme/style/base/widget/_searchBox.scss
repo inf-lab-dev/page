@@ -1,0 +1,90 @@
+.VPLocalSearchBox {
+    --vp-backdrop-bg-color: var(--bgColor-neutral-muted);
+    --vp-local-search-bg: var(--bgColor-default);
+    --vp-c-divider: var(--borderColor-default);
+    --vp-c-brand-1: var(--fgColor-accent);
+    --vp-local-search-result-border: var(--borderColor-default);
+
+    --vp-local-search-result-bg: var(--fgColor-muted);
+
+    --vp-local-search-result-selected-bg: var(--fgColor-accent);
+    --vp-local-search-result-selected-border: var(--borderColor-accent);
+
+    --vp-local-search-highlight-bg: var(--bgColor-attention-muted);
+    --vp-local-search-highlight-border: var(--borderColor-attention);
+
+    color: var(--fgColor-default);
+
+    .backdrop {
+        backdrop-filter: blur(var(--base-size-4));
+    }
+
+    .shell {
+        $shellPadding: var(--base-size-16);
+        gap: var(--base-size-8);
+
+        padding: 0;
+
+        .search-bar {
+            margin: $shellPadding;
+            padding: 0;
+
+            .search-input {
+                outline: none;
+                box-shadow: none;
+                border: none;
+                background-color: transparent;
+            }
+
+            .search-actions {
+                > button {
+                    cursor: pointer;
+                    border: none;
+                    background: transparent;
+                }
+            }
+        }
+
+        .results {
+            margin-block: 0;
+
+            margin: $shellPadding;
+            padding-inline-start: 0;
+
+            .no-results {
+                list-style-type: none;
+            }
+
+            a {
+                color: var(--fgColor-default);
+                text-decoration: none;
+
+                > div {
+                    $padding: var(--base-size-8);
+
+                    margin: 0;
+
+                    .titles {
+                        padding: $padding;
+                    }
+
+                    .excerpt-wrapper {
+                        --vp-local-search-result-bg: var(--bgColor-muted);
+
+                        padding: $padding;
+                    }
+                }
+            }
+        }
+
+        .search-keyboard-shortcuts {
+            margin: $shellPadding;
+
+            kbd {
+                @include markdown-kbd;
+
+                font-size: var(--base-size-14);
+            }
+        }
+    }
+}

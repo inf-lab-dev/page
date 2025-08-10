@@ -43,6 +43,32 @@ export default defineConfig<ThemeOptions>({
             pattern: 'https://github.com/inf-lab-dev/labs/edit/main/:path',
             text: 'Verbessere diese Seite',
         },
+        search: {
+            provider: 'local',
+            options: {
+                translations: {
+                    button: {
+                        buttonText: 'Suchen',
+                        buttonAriaLabel: 'Suche öffnen',
+                    },
+                    modal: {
+                        displayDetails: 'Inhalt der Suchergebnisse anzeigen',
+                        resetButtonTitle: 'Suche leeren',
+                        backButtonTitle: 'Suche schließen',
+                        noResultsText: 'Keine Ergebnisse für',
+                        footer: {
+                            selectText: 'zum auszuwählen',
+                            selectKeyAriaLabel: 'Enter',
+                            navigateText: 'zum navigieren',
+                            navigateUpKeyAriaLabel: 'Pfeiltaste nach oben',
+                            navigateDownKeyAriaLabel: 'Pfeiltaste nach unten',
+                            closeText: 'zum schließen',
+                            closeKeyAriaLabel: 'Escape',
+                        },
+                    },
+                },
+            },
+        },
         banner: {
             advent: false,
         },

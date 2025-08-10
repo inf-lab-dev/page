@@ -1,4 +1,5 @@
 @import '~/normalize.css/normalize.css';
+@import '~/vitepress/dist/client/theme-default/styles/icons.css';
 
 @import 'util';
 @import 'base/alert';
@@ -7,6 +8,7 @@
 @import 'base/markdown';
 @import 'base/print';
 @import 'base/code';
+@import 'base/widget';
 
 html {
     --base-size-4: 0.25rem;
@@ -22,8 +24,14 @@ html {
 
     --fontStack-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo,
         Consolas, Liberation Mono, monospace;
+    --fontSize-monospace: 11px;
 
     @import 'scheme/light';
+
+    // Ensure the VitePress classes map to our local ones
+    .vp-doc {
+        @extend .markdown-body;
+    }
 
     &.dark {
         @import 'scheme/dark';

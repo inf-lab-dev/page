@@ -22,6 +22,9 @@ export default defineDynamicPageSource({
                 return {
                     path: path.replace(/\.solution\.json$/, ''),
                     title: content.title,
+                    frontmatter: {
+                        search: false,
+                    },
                 };
             }),
         );

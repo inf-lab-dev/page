@@ -18,6 +18,7 @@ export default defineDynamicPageSource({
             .map((path) => ({
                 path: path.replace(/\.md$/, ''),
                 frontmatter: {
+                    search: false,
                     editLink: {
                         pattern:
                             'https://github.com/inf-lab-dev/solution/edit/main/:path',

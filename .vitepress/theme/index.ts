@@ -1,4 +1,4 @@
-import type { Theme } from 'vitepress';
+import type { DefaultTheme, Theme } from 'vitepress';
 import EncryptedSolution from '../../src/components/_deprecated/EncryptedSolution.vue';
 import EncryptedSolutionGroup from '../../src/components/_deprecated/EncryptedSolutionGroup.vue';
 import MaterialFAQ from '../../src/components/_deprecated/MaterialFAQ.vue';
@@ -6,6 +6,10 @@ import Layout from './Layout.vue';
 import './style/style.scss';
 
 export interface ThemeOptions {
+    search: {
+        provider: 'local';
+        options: Omit<DefaultTheme.LocalSearchOptions, 'locales'>;
+    };
     editLink: {
         pattern: string;
         text: string;
