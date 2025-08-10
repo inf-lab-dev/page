@@ -1,8 +1,12 @@
+import { loadEnv } from 'vitepress';
+
+const env = loadEnv('', process.cwd());
+
 /**
  * The path to the locally cloned solutions repository.
  */
 export const SOLUTIONS_REPOSITORY_PATH =
-    process.env.SOLUTIONS_REPOSITORY_PATH ?? '../solution';
+    env.SOLUTIONS_REPOSITORY_PATH ?? '../solution';
 
 /**
  * The path to the page's source folder, as configured in the VitePress

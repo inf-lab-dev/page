@@ -1,4 +1,6 @@
 import glob from 'fast-glob';
+import { readFile } from 'node:fs/promises';
+import { EncryptedSolution } from 'solution-zone';
 import { defineDynamicPageSource } from '.';
 import { PAGE_SOURCE_PATH } from '../../../env';
 
@@ -9,9 +11,19 @@ export default defineDynamicPageSource({
             cwd: `${PAGE_SOURCE_PATH}/content`,
         });
 
-        return entries.map((path) => ({
-            path: path.replace(/\.solution\.json$/, ''),
-            title: path,
-        }));
+        return await Promise.all(
+            entries.map(async (path) => {
+                const content = JSON.parse(
+                    (
+                        await readFile(`${PAGE_SOURCE_PATH}/content/${path}`)
+                    ).toString('utf-8'),
+                ) as EncryptedSolution;
+
+                return {
+                    path: path.replace(/\.solution\.json$/, ''),
+                    title: content.title,
+                };
+            }),
+        );
     },
 });
