@@ -29,11 +29,10 @@
 
 <script lang="ts" setup>
 import KeyForm, { KeySubmission } from '@/components/crypto/KeyForm.vue';
+import { usePrivateKey } from '@/composables/usePrivateKey';
 import { decryptString } from '@/lib/crypto';
-import { onMounted, ref } from 'vue';
+import { ref, watch } from 'vue';
 import DecryptionError from './DecryptionError.vue';
-
-const REMEMBER_KEY = 'private-key';
 
 const props = defineProps<{
     content: string;
@@ -43,6 +42,8 @@ const isLoading = ref(false);
 const hasError = ref(false);
 const decryptedContent = ref<string>();
 
+const privateKey = usePrivateKey();
+
 async function onKeySubmitted({ key, remember }: KeySubmission) {
     hasError.value = false;
 
@@ -50,7 +51,7 @@ async function onKeySubmitted({ key, remember }: KeySubmission) {
 
     if (success) {
         if (remember) {
-            localStorage.setItem(REMEMBER_KEY, key);
+            privateKey.value = key;
         }
     } else {
         hasError.value = true;
@@ -70,17 +71,19 @@ async function decryptContent(key: string) {
     }
 }
 
-onMounted(async () => {
-    const storedKey = localStorage.getItem(REMEMBER_KEY);
+watch(
+    privateKey,
+    async (newKey, oldKey) => {
+        if (newKey && newKey !== oldKey) {
+            const success = await decryptContent(newKey);
 
-    if (storedKey) {
-        const success = await decryptContent(storedKey);
-
-        if (!success) {
-            localStorage.removeItem(REMEMBER_KEY);
+            if (!success) {
+                privateKey.value = null;
+            }
         }
-    }
-});
+    },
+    { immediate: true },
+);
 </script>
 
 <style lang="scss" scoped>
