@@ -69,7 +69,7 @@ async function onSubmit() {
 .keyForm {
     display: flex;
     flex-direction: column;
-    gap: var(--base-size-8);
+    gap: var(--base-size-16);
 
     .keyForm__label {
         font-weight: var(--base-text-weight-semibold);
