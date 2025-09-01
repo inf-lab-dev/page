@@ -89,9 +89,11 @@ async function onSubmit() {
 
     .keyForm__submit {
         cursor: pointer;
-        border: var(--base-size-8) solid var(--borderColor-accent);
+
         border-radius: var(--base-size-4);
         background-color: var(--fgColor-accent);
+
+        padding: var(--base-size-4) var(--base-size-8);
 
         width: min-content;
 
