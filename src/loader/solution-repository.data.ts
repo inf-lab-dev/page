@@ -1,15 +1,17 @@
 import { readFile } from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { createContentLoader } from 'vitepress';
-import {
-    PAGE_SOURCE_PATH,
-    PUBLIC_KEY_PATH,
-    SOLUTIONS_REPOSITORY_PATH,
-} from '../env';
+import { PAGE_SOURCE_PATH, PUBLIC_KEY_PATH } from '../env';
 import { encryptString } from '../lib/crypto';
 import { getPageTitle } from '../lib/dynamic-page/utils';
 
 type Data = Record<string, { title?: string; content: string }>;
+
+const SOLUTIONS_REPOSITORY_PATH = path.join(
+    path.dirname(fileURLToPath(import.meta.url)),
+    '../page/solution',
+);
 
 export declare const data: Data;
 
