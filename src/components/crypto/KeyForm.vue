@@ -21,9 +21,7 @@
             />
             <label :for="rememberFieldId">Schlüssel im Browser speichern</label>
         </div>
-        <button class="keyForm__submit" :disabled="!canSubmit" type="submit">
-            Entschlüsseln
-        </button>
+        <button :disabled="!canSubmit" type="submit">Entschlüsseln</button>
     </form>
 </template>
 
@@ -85,33 +83,6 @@ async function onSubmit() {
         align-items: center;
 
         gap: var(--base-size-4);
-    }
-
-    .keyForm__submit {
-        cursor: pointer;
-
-        border-radius: var(--base-size-4);
-        background-color: var(--fgColor-accent);
-
-        padding: var(--base-size-4) var(--base-size-8);
-
-        width: min-content;
-
-        // TODO: THIS IS NOT SO GREAT...
-        color: white;
-
-        &:hover,
-        &:focus {
-            &:not(:disabled) {
-                filter: brightness(90%);
-            }
-        }
-
-        &:disabled {
-            opacity: 0.5;
-
-            cursor: not-allowed;
-        }
     }
 }
 </style>

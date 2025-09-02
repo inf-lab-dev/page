@@ -1,0 +1,28 @@
+button[type='submit'] {
+    cursor: pointer;
+
+    border: none;
+
+    border-radius: var(--base-size-4);
+    background-color: var(--fgColor-accent);
+
+    padding: var(--base-size-8) var(--base-size-16);
+
+    width: min-content;
+
+    // TODO: THIS IS NOT SO GREAT...
+    color: white;
+
+    &:hover,
+    &:focus {
+        &:not(:disabled) {
+            filter: brightness(90%);
+        }
+    }
+
+    &:disabled {
+        opacity: 0.5;
+
+        cursor: not-allowed;
+    }
+}
