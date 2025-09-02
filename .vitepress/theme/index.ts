@@ -33,9 +33,7 @@ export default {
             const base = siteData.value?.base || '/';
             const currentPath = router.route.path;
 
-            const routePath = siteData.value.cleanUrls
-                ? `${currentPath.replace(/^\/|\/$/g, '')}/`
-                : currentPath;
+            const routePath = currentPath.replace(/^\/|\/$/g, '');
 
             return new URL(
                 relativePath,
