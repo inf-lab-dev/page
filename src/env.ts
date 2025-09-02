@@ -1,3 +1,14 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+/**
+ * The path to the solutions repository.
+ */
+export const SOLUTIONS_REPOSITORY_PATH = path.join(
+    path.dirname(fileURLToPath(import.meta.url)),
+    './page/solution',
+);
+
 /**
  * The path to the page's source folder, as configured in the VitePress
  * config file.
