@@ -1,0 +1,75 @@
+name: Update submodule
+
+on:
+    repository_dispatch:
+        types: [update_content, update_solution]
+
+permissions:
+    contents: write
+    pull-requests: write
+
+jobs:
+    update:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  submodules: 'recursive'
+                  token: ${{ secrets.GH_TOKEN_DEPLOY_REPOSITORIES }}
+
+            - name: Update git user
+              run: |
+                  git config --global user.name "github-actions[bot]"
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+            - name: Select submodule
+              run: |
+                  if [ "${{ github.event.action }}" = "update_content" ]; then
+                    echo "SUBMODULE_NAME=content" >> $GITHUB_ENV
+                    echo "SUBMODULE_PATH=src/page/content" >> $GITHUB_ENV
+                    echo "REPO_URL=https://github.com/inf-lab-dev/labs" >> $GITHUB_ENV
+
+                  elif [ "${{ github.event.action }}" = "update_solution" ]; then
+                    echo "SUBMODULE_NAME=solution" >> $GITHUB_ENV
+                    echo "SUBMODULE_PATH=src/page/solution" >> $GITHUB_ENV
+                    echo "REPO_URL=https://github.com/inf-lab-dev/solution" >> $GITHUB_ENV
+                    
+                  else
+                    echo "Unknown dispatch type: ${{ github.event.action }}"
+                    exit 1
+                  fi
+
+            - name: Update Submodule
+              run: |
+                  previous_sha=$(git submodule status | grep "${SUBMODULE_PATH}" | awk '{ print substr($1,2) }')
+                  echo "previous_sha=${previous_sha}" >> $GITHUB_ENV
+
+                  git submodule update --remote --merge ${SUBMODULE_PATH}
+                  git add ${SUBMODULE_PATH}
+
+                  sha=$(git submodule status | grep "${SUBMODULE_PATH}" | awk '{ print substr($1,2) }')
+                  echo "sha=${sha}" >> $GITHUB_ENV
+
+                  git commit -m "Update ${SUBMODULE_NAME} to latest commit"
+
+            - name: Close previous Pull Request
+              continue-on-error: true
+              run: |
+                  gh pr close update-${SUBMODULE_NAME}/${{ env.previous_sha }} \
+                    --comment "There is a newer pull-request available." \
+                    --delete-branch
+
+            - name: Create Pull Request
+              uses: peter-evans/create-pull-request@v7
+              with:
+                  delete-branch: true
+                  author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+                  branch: 'update-${SUBMODULE_NAME}/${{ env.sha }}'
+                  title: 'Update ${SUBMODULE_NAME} submodule'
+                  labels: update,${SUBMODULE_NAME}
+                  base: main
+                  body: |
+                      The submodule **${SUBMODULE_NAME}** has been updated to commit ${{ env.sha }} from [${REPO_URL}](${REPO_URL}).
