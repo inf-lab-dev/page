@@ -4,6 +4,8 @@ import { defineConfig } from 'vitepress';
 import { zipPlugin } from './plugin/zip';
 import { ThemeOptions } from './theme';
 
+const PUBLIC_URL = 'https://inf-lab.dev';
+
 export default defineConfig<ThemeOptions>({
     title: 'inf-labs',
     description: 'Material für die Inf-Einf-Labs',
@@ -25,7 +27,7 @@ export default defineConfig<ThemeOptions>({
         plugins: [
             zipPlugin({
                 src: './src/page/content',
-                publicUrl: 'https://inf-lab.dev',
+                publicUrl: PUBLIC_URL,
             }),
         ],
         ssr: {
@@ -39,6 +41,7 @@ export default defineConfig<ThemeOptions>({
         },
     },
     themeConfig: {
+        publicUrl: PUBLIC_URL,
         editLink: {
             pattern: 'https://github.com/inf-lab-dev/labs/edit/main/:path',
             text: 'Verbessere diese Seite',
