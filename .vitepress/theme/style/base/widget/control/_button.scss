@@ -3,10 +3,7 @@ button[type='submit'] {
 
     border: none;
 
-    border-radius: var(--base-size-4);
     background-color: var(--fgColor-accent);
-
-    padding: var(--base-size-8) var(--base-size-16);
 
     width: min-content;
 
@@ -20,9 +17,5 @@ button[type='submit'] {
         }
     }
 
-    &:disabled {
-        opacity: 0.5;
-
-        cursor: not-allowed;
-    }
+    @include control;
 }

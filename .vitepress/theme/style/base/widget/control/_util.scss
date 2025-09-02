@@ -1,0 +1,10 @@
+@mixin control {
+    border-radius: var(--base-size-4);
+    padding: var(--base-size-8) var(--base-size-16);
+
+    &:disabled {
+        opacity: 0.5;
+
+        cursor: not-allowed;
+    }
+}
