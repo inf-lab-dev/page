@@ -2,13 +2,8 @@
 @import '~/vitepress/dist/client/theme-default/styles/icons.css';
 
 @import 'util';
-@import 'base/alert';
-@import 'base/anchor';
-@import 'base/details';
 @import 'base/markdown';
 @import 'base/print';
-@import 'base/code';
-@import 'base/widget';
 
 html {
     --base-size-4: 0.25rem;

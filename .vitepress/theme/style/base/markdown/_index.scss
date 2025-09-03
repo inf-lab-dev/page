@@ -1,3 +1,9 @@
+@import 'alert';
+@import 'anchor';
+@import 'details';
+@import 'code';
+@import 'table';
+
 @mixin markdown-kbd {
     display: inline-block;
     vertical-align: middle;
