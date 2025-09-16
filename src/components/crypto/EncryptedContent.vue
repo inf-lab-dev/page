@@ -31,7 +31,8 @@
 import KeyForm, { KeySubmission } from '@/components/crypto/KeyForm.vue';
 import { usePrivateKey } from '@/composables/usePrivateKey';
 import { decryptString } from '@/lib/crypto';
-import { ref, watch } from 'vue';
+import { watchTriggerable } from '@vueuse/core';
+import { onMounted, ref } from 'vue';
 import DecryptionError from './DecryptionError.vue';
 
 const props = defineProps<{
@@ -71,7 +72,7 @@ async function decryptContent(key: string) {
     }
 }
 
-watch(
+const { trigger: attemptDecrypt } = watchTriggerable(
     privateKey,
     async (newKey, oldKey) => {
         if (newKey && newKey !== oldKey) {
@@ -82,8 +83,9 @@ watch(
             }
         }
     },
-    { immediate: true },
 );
+
+onMounted(() => attemptDecrypt());
 </script>
 
 <style lang="scss" scoped>
