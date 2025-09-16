@@ -31,7 +31,7 @@ export default defineConfig<ThemeOptions>({
             }),
         ],
         ssr: {
-            noExternal: ['monaco-editor'],
+            noExternal: ['monaco-editor', 'mark.js'],
         },
         resolve: {
             alias: {
