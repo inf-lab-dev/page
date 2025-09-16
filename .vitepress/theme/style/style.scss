@@ -1,12 +1,9 @@
 @import '~/normalize.css/normalize.css';
+@import '~/vitepress/dist/client/theme-default/styles/icons.css';
 
 @import 'util';
-@import 'base/alert';
-@import 'base/anchor';
-@import 'base/details';
 @import 'base/markdown';
 @import 'base/print';
-@import 'base/code';
 
 html {
     --base-size-4: 0.25rem;
@@ -22,14 +19,27 @@ html {
 
     --fontStack-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo,
         Consolas, Liberation Mono, monospace;
+    --fontSize-monospace: 11px;
+
+    // Prevent layout-shifts
+    scrollbar-gutter: stable both-edges;
 
     @import 'scheme/light';
+
+    // Ensure the VitePress classes map to our local ones
+    .vp-doc {
+        @extend .markdown-body;
+    }
 
     &.dark {
         @import 'scheme/dark';
     }
 
     @media print {
+        // Include background images when printing
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+
         &.dark {
             // still use light theme when printing
             @import 'scheme/light';

@@ -1,0 +1,99 @@
+name: Update submodule(s)
+
+on:
+    repository_dispatch:
+        types: [update_content, update_solution, update_all]
+
+permissions:
+    contents: write
+    pull-requests: write
+
+jobs:
+    update:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  submodules: 'recursive'
+                  token: ${{ secrets.GH_TOKEN_DEPLOY_REPOSITORIES }}
+
+            - name: Update git user
+              run: |
+                  git config --global user.name "github-actions[bot]"
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+            - name: Select submodule(s)
+              run: |
+                  if [ "${{ github.event.action }}" = "update_content" ]; then
+                    echo "SUBMODULE_MODE=single" >> $GITHUB_ENV
+                    echo "SUBMODULE_NAME=content" >> $GITHUB_ENV
+                    echo "SUBMODULE_PATH=src/page/content" >> $GITHUB_ENV
+                    echo "REPO_URL=https://github.com/inf-lab-dev/labs" >> $GITHUB_ENV
+                    echo "LABELS=update,content" >> $GITHUB_ENV
+
+                  elif [ "${{ github.event.action }}" = "update_solution" ]; then
+                    echo "SUBMODULE_MODE=single" >> $GITHUB_ENV
+                    echo "SUBMODULE_NAME=solution" >> $GITHUB_ENV
+                    echo "SUBMODULE_PATH=src/page/solution" >> $GITHUB_ENV
+                    echo "REPO_URL=https://github.com/inf-lab-dev/solution" >> $GITHUB_ENV
+                    echo "LABELS=update,solution" >> $GITHUB_ENV
+
+                  else
+                    echo "SUBMODULE_MODE=all" >> $GITHUB_ENV
+                    echo "LABELS=update,content,solution" >> $GITHUB_ENV
+                  fi
+
+            - name: Update submodule(s)
+              run: |
+                  if [ "$SUBMODULE_MODE" = "single" ]; then
+                    previous_sha=$(git submodule status | grep "${SUBMODULE_PATH}" | awk '{ print substr($1,2) }')
+                    echo "previous_sha=${previous_sha}" >> $GITHUB_ENV
+
+                    git submodule update --remote --merge ${SUBMODULE_PATH}
+                    git add ${SUBMODULE_PATH}
+
+                    sha=$(git submodule status | grep "${SUBMODULE_PATH}" | awk '{ print substr($1,2) }')
+                    echo "sha=${sha}" >> $GITHUB_ENV
+
+                    git commit -m "Update ${SUBMODULE_NAME} to latest commit" || echo "No changes to commit"
+
+                  else
+                    previous_sha=$(git rev-parse HEAD)
+                    echo "previous_sha=${previous_sha}" >> $GITHUB_ENV
+
+                    git submodule update --remote --merge --recursive
+                    git add .
+
+                    sha=$(git rev-parse HEAD)
+                    echo "sha=${sha}" >> $GITHUB_ENV
+
+                    git commit -m "Update all submodules to latest commits" || echo "No changes to commit"
+                  fi
+
+            - name: Close previous Pull Request
+              continue-on-error: true
+              run: |
+                  if [ "$SUBMODULE_MODE" = "single" ]; then
+                    gh pr close update-${SUBMODULE_NAME}/${{ env.previous_sha }} \
+                      --comment "There is a newer pull-request available." \
+                      --delete-branch
+                  else
+                    gh pr close update-all/${{ env.previous_sha }} \
+                      --comment "There is a newer pull-request available." \
+                      --delete-branch
+                  fi
+
+            - name: Create Pull Request
+              uses: peter-evans/create-pull-request@v7
+              with:
+                  delete-branch: true
+                  author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+                  branch: ${{ env.SUBMODULE_MODE == 'single' && format('update-{0}/{1}', env.SUBMODULE_NAME, env.sha) || format('update-all/{0}', env.sha) }}
+                  title: ${{ env.SUBMODULE_MODE == 'single' && format('Update {0} submodule', env.SUBMODULE_NAME) || 'Update all submodules' }}
+                  labels: ${{ env.LABELS }}
+                  base: main
+                  body: |
+                      ${{ env.SUBMODULE_MODE == 'single' && format('The submodule **{0}** has been updated to commit {1} from [{2}]({2}).', env.SUBMODULE_NAME, env.sha, env.REPO_URL) || format('All submodules have been updated to their latest commits. (ref {0})', env.sha) }}

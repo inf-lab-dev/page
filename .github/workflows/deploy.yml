@@ -25,10 +25,13 @@ jobs:
     # Build job
     build:
         runs-on: ubuntu-latest
+        env:
+            SOLUTIONS_REPOSITORY_PATH: './solution_repository'
         steps:
-            - name: Checkout
+            - name: Checkout page repository
               uses: actions/checkout@v4
               with:
+                  token: ${{ secrets.GH_TOKEN_DEPLOY_REPOSITORIES }}
                   submodules: 'recursive'
 
             - name: Setup Node

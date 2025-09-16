@@ -1,3 +1,6 @@
-[submodule "content"]
-	path = content
+[submodule "src/page/content"]
+	path = src/page/content
 	url = https://github.com/inf-lab-dev/labs.git
+[submodule "src/page/solution"]
+	path = src/page/solution
+	url = https://github.com/inf-lab-dev/solution.git

@@ -1,0 +1,21 @@
+button[type='submit'] {
+    cursor: pointer;
+
+    border: none;
+
+    background-color: var(--fgColor-accent);
+
+    width: min-content;
+
+    // TODO: THIS IS NOT SO GREAT...
+    color: white;
+
+    &:hover,
+    &:focus {
+        &:not(:disabled) {
+            filter: brightness(90%);
+        }
+    }
+
+    @include control;
+}

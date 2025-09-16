@@ -9,7 +9,12 @@
         ],
         "strict": true,
         "resolveJsonModule": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"],
+            "~/*": ["node_modules/*"]
+        }
     },
     "include": [
         ".vitepress/**/*.{vue,ts}",

@@ -1,42 +1,33 @@
 import markdownItFootnote from 'markdown-it-footnote';
-import path from 'node:path';
 import { fileURLToPath } from 'url';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
-import { defineConfigWithTheme } from 'vitepress';
+import { defineConfig } from 'vitepress';
 import { zipPlugin } from './plugin/zip';
 import { ThemeOptions } from './theme';
 
-const STATIC_FILE_EXTENSIONS = ['sh', 'zip', 'py', 'hosted.js'];
+const PUBLIC_URL = 'https://inf-lab.dev';
 
-export default defineConfigWithTheme<ThemeOptions>({
+export default defineConfig<ThemeOptions>({
     title: 'inf-labs',
     description: 'Material für die Inf-Einf-Labs',
     lang: 'de-DE',
-    srcDir: './content',
+    srcDir: './src/page',
     cleanUrls: true,
     ignoreDeadLinks: true,
     appearance: 'force-auto',
+
+    // Ignore all READMEs, as otherwise the VitePress engine
+    // will fail with an error like "Cannot read properties of undefined (reading 'imports')"
+    // as the modules are duplicated (i.e. we have 2 readmes, one from solution, one from labs).
+    srcExclude: ['**/README.md'],
+
+    rewrites: {
+        'content/:path*': ':path*',
+    },
     vite: {
         plugins: [
             zipPlugin({
-                src: './content',
-                publicUrl: 'https://inf-lab.dev',
-            }),
-            viteStaticCopy({
-                targets: [
-                    {
-                        src: `../content/**/*.{${STATIC_FILE_EXTENSIONS.join(',')}}`,
-                        dest: '',
-                        rename: (_file, _extension, absolutePath) => {
-                            const contentPath = path.resolve('./content');
-                            const resolvedName = absolutePath.substring(
-                                contentPath.length + 1,
-                            );
-
-                            return resolvedName;
-                        },
-                    },
-                ],
+                src: './src/page/content',
+                publicUrl: PUBLIC_URL,
             }),
         ],
         ssr: {
@@ -45,20 +36,48 @@ export default defineConfigWithTheme<ThemeOptions>({
         resolve: {
             alias: {
                 '~': fileURLToPath(new URL('../node_modules', import.meta.url)),
+                '@': fileURLToPath(new URL('../src', import.meta.url)),
             },
         },
     },
     themeConfig: {
+        publicUrl: PUBLIC_URL,
         editLink: {
             pattern: 'https://github.com/inf-lab-dev/labs/edit/main/:path',
             text: 'Verbessere diese Seite',
+        },
+        search: {
+            provider: 'local',
+            options: {
+                translations: {
+                    button: {
+                        buttonText: 'Suchen',
+                        buttonAriaLabel: 'Suche öffnen',
+                    },
+                    modal: {
+                        displayDetails: 'Inhalt der Suchergebnisse anzeigen',
+                        resetButtonTitle: 'Suche leeren',
+                        backButtonTitle: 'Suche schließen',
+                        noResultsText: 'Keine Ergebnisse für',
+                        footer: {
+                            selectText: 'zum auszuwählen',
+                            selectKeyAriaLabel: 'Enter',
+                            navigateText: 'zum navigieren',
+                            navigateUpKeyAriaLabel: 'Pfeiltaste nach oben',
+                            navigateDownKeyAriaLabel: 'Pfeiltaste nach unten',
+                            closeText: 'zum schließen',
+                            closeKeyAriaLabel: 'Escape',
+                        },
+                    },
+                },
+            },
         },
         banner: {
             advent: false,
         },
     },
     markdown: {
-        config: (md) => md.use(markdownItFootnote),
+        config: (md) => void md.use(markdownItFootnote),
         math: true,
 
         codeCopyButtonTitle: 'Code kopieren',
@@ -72,5 +91,18 @@ export default defineConfigWithTheme<ThemeOptions>({
             importantLabel: 'Wichtig',
             cautionLabel: 'Vorsicht',
         },
+    },
+    transformPageData(pageData) {
+        // Allow to set some page properties for dynamic routes
+        if (pageData.params?.title) {
+            pageData.title = pageData.params.title;
+        }
+
+        if (pageData.params?.frontmatter) {
+            pageData.frontmatter = {
+                ...pageData.frontmatter,
+                ...pageData.params.frontmatter,
+            };
+        }
     },
 });

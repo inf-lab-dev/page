@@ -8,13 +8,14 @@
 
         <Content />
 
-        <div
-            v-if="theme.editLink"
-            :class="[$style.wrapper__footer, 'no-print']"
-        >
-            Diese Seite ist Open Source.
-            <a :href="editUrl">{{ theme.editLink.text }}</a
-            >.
+        <div :class="[$style.wrapper__footer, 'no-print']">
+            <SearchButton />
+
+            <div :class="$style.wrapper__footerEditLink" v-if="theme.editLink">
+                Diese Seite ist Open Source.
+                <a :href="editUrl">{{ theme.editLink.text }}</a
+                >.
+            </div>
         </div>
     </div>
 </template>
@@ -23,14 +24,20 @@
 import { useData } from 'vitepress';
 import { computed } from 'vue';
 import AdventOfInfAd from './banner/AdventOfInfAd.vue';
+import SearchButton from './widget/SearchButton.vue';
 
 const { site, page, theme, frontmatter } = useData();
 
 const editUrl = computed(() => {
-    if (theme.value.editLink) {
-        return theme.value.editLink.pattern.replace(
+    const editLinkPattern =
+        frontmatter.value?.editLink?.pattern ?? theme.value.editLink?.pattern;
+    const editLinkStripPathPrefix =
+        frontmatter.value.editLink?.stripPathPrefix ?? '';
+
+    if (editLinkPattern) {
+        return editLinkPattern.replace(
             ':path',
-            page.value.relativePath,
+            page.value.relativePath.substring(editLinkStripPathPrefix.length),
         );
     }
 
@@ -55,6 +62,7 @@ $mx: 32px;
 }
 
 .wrapper__footer {
+    display: flex;
     margin-top: $mx;
     border-top: 1px var(--borderColor-neutral-muted) solid;
 
@@ -62,5 +70,9 @@ $mx: 32px;
     color: var(--fgColor-muted);
 
     text-align: right;
+}
+
+.wrapper__footerEditLink {
+    flex-grow: 1;
 }
 </style>
