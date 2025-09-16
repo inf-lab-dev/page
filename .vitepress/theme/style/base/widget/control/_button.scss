@@ -8,12 +8,12 @@ button[type='submit'] {
     width: min-content;
     color: white;
 
+    @include control;
+
     &:hover,
     &:focus {
         &:not(:disabled) {
             filter: brightness(90%);
         }
     }
-
-    @include control;
 }
