@@ -6,9 +6,9 @@ button[type='submit'] {
     background-color: var(--fgColor-accent);
 
     width: min-content;
-
-    // TODO: THIS IS NOT SO GREAT...
     color: white;
+
+    @include control;
 
     &:hover,
     &:focus {
@@ -16,6 +16,4 @@ button[type='submit'] {
             filter: brightness(90%);
         }
     }
-
-    @include control;
 }
