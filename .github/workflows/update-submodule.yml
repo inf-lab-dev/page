@@ -58,22 +58,23 @@ jobs:
                     sha=$(git submodule status | grep "${SUBMODULE_PATH}" | awk '{ print substr($1,2) }')
                     echo "sha=${sha}" >> $GITHUB_ENV
 
-                    git commit -m "Update ${SUBMODULE_NAME} to latest commit" || echo "No changes to commit"
+                    git commit -m "Update ${SUBMODULE_NAME} to latest commit" || echo "NO_CHANGES=1" >> $GITHUB_ENV
 
                   else
-                    previous_sha=$(git rev-parse HEAD)
+                    previous_sha=$(git submodule status | awk '{ print substr($1,2) }' | tr '\n' ' ')
                     echo "previous_sha=${previous_sha}" >> $GITHUB_ENV
 
                     git submodule update --remote --merge --recursive
                     git add .
 
-                    sha=$(git rev-parse HEAD)
+                    sha=$(git submodule status | awk '{ print substr($1,2) }' | tr '\n' ' ')
                     echo "sha=${sha}" >> $GITHUB_ENV
 
-                    git commit -m "Update all submodules to latest commits" || echo "No changes to commit"
+                    git commit -m "Update all submodules to latest commits" || echo "NO_CHANGES=1" >> $GITHUB_ENV
                   fi
 
             - name: Close previous Pull Request
+              if: env.NO_CHANGES != '1'
               continue-on-error: true
               run: |
                   if [ "$SUBMODULE_MODE" = "single" ]; then
@@ -87,6 +88,7 @@ jobs:
                   fi
 
             - name: Create Pull Request
+              if: env.NO_CHANGES != '1'
               uses: peter-evans/create-pull-request@v7
               with:
                   delete-branch: true
@@ -96,4 +98,4 @@ jobs:
                   labels: ${{ env.LABELS }}
                   base: main
                   body: |
-                      ${{ env.SUBMODULE_MODE == 'single' && format('The submodule **{0}** has been updated to commit {1} from [{2}]({2}).', env.SUBMODULE_NAME, env.sha, env.REPO_URL) || format('All submodules have been updated to their latest commits. (ref {0})', env.sha) }}
+                      ${{ env.SUBMODULE_MODE == 'single' && format('The submodule **{0}** has been updated to commit {1} from [{2}]({2}).', env.SUBMODULE_NAME, env.sha, env.REPO_URL) || format('All submodules have been updated to their latest commits. (refs: {0})', env.sha) }}
