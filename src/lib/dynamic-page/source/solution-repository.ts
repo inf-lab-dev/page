@@ -22,7 +22,6 @@ export default defineDynamicPageSource({
                     editLink: {
                         pattern:
                             'https://github.com/inf-lab-dev/solution/edit/main/:path',
-                        stripPathPrefix: '/solution',
                     },
                 },
             }));

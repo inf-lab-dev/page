@@ -13,7 +13,11 @@
 
             <div :class="$style.wrapper__footerEditLink" v-if="theme.editLink">
                 Diese Seite ist Open Source.
-                <a :href="editUrl">{{ theme.editLink.text }}</a
+                <a
+                    :href="editUrl"
+                    target="_blank"
+                    rel="nofollow noreferer noopener"
+                    >{{ theme.editLink.text }}</a
                 >.
             </div>
         </div>
@@ -31,14 +35,9 @@ const { site, page, theme, frontmatter } = useData();
 const editUrl = computed(() => {
     const editLinkPattern =
         frontmatter.value?.editLink?.pattern ?? theme.value.editLink?.pattern;
-    const editLinkStripPathPrefix =
-        frontmatter.value.editLink?.stripPathPrefix ?? '';
 
     if (editLinkPattern) {
-        return editLinkPattern.replace(
-            ':path',
-            page.value.relativePath.substring(editLinkStripPathPrefix.length),
-        );
+        return editLinkPattern.replace(':path', page.value.relativePath);
     }
 
     return '';
