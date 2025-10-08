@@ -1,5 +1,7 @@
 <template>
-    <slot v-if="hasKey"></slot>
+    <ClientOnly>
+        <slot v-if="hasKey"></slot>
+    </ClientOnly>
 </template>
 
 <script lang="ts" setup>
