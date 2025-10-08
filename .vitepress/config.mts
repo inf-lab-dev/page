@@ -18,7 +18,7 @@ export default defineConfig<ThemeOptions>({
     // Ignore all READMEs, as otherwise the VitePress engine
     // will fail with an error like "Cannot read properties of undefined (reading 'imports')"
     // as the modules are duplicated (i.e. we have 2 readmes, one from solution, one from labs).
-    srcExclude: ['**/README.md'],
+    srcExclude: ['**/README.md', 'solution/**'],
 
     rewrites: {
         'content/:path*': ':path*',
