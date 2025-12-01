@@ -73,7 +73,7 @@ export default defineConfig<ThemeOptions>({
             },
         },
         banner: {
-            advent: false,
+            advent: true,
         },
     },
     markdown: {
