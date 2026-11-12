@@ -74,6 +74,7 @@ export default defineConfig<ThemeOptions>({
         },
         banner: {
             advent: false,
+            archived: true,
         },
     },
     markdown: {

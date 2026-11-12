@@ -1,12 +1,16 @@
 <template>
     <NotFound v-if="page.isNotFound" />
     <Content v-else-if="frontmatter.layout === 'empty'" />
-    <Page v-else />
+    <template v-else>
+        <ArchivedNotice />
+        <Page />
+    </template>
 </template>
 
 <script setup lang="ts">
 import { useData } from 'vitepress';
 import { onMounted, onUnmounted } from 'vue';
+import ArchivedNotice from './components/banner/ArchivedNotice.vue';
 import NotFound from './components/NotFound.vue';
 import Page from './components/Page.vue';
 

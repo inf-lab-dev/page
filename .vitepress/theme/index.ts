@@ -19,6 +19,7 @@ export interface ThemeOptions {
     };
     banner: {
         advent: boolean;
+        archived: boolean;
     };
 }
 
